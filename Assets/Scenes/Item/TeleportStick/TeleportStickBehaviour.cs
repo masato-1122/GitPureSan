@@ -11,7 +11,11 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     public float effectLifeTime = 0;            // エフェクトの持続時間
     protected float now;
     private PhotonView photon = null;
-    
+
+    //テレポート先のオブジェクト
+    private GameObject obj;
+    [SerializeField]private string objName;
+    private Vector3 offset;
 
     protected void Start()
     {
@@ -28,6 +32,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
         
 
         heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
+        obj = GameObject.Find(objName);
     }
 
 
@@ -41,6 +46,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
         }
 
         base.Update();
+        offset = obj.transform.position + new Vector3( 0f, 5f, 0f);
     }
 
 
@@ -55,7 +61,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     public void ActionForTargetedObject(GameObject target)
     {
 
-        if (true)
+        if (obj != null)
         {
             // エフェクト
             if(teleportEffect != null)
@@ -68,7 +74,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
             }
 
             // 対象をテレポート
-            target.transform.position = new Vector3(15f, 11f, -50f);
+            target.transform.position = offset;
 
             transform.localEulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
         }

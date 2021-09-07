@@ -18,6 +18,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public string playerName;
     private bool itemFlag = true;
 
+    private ColorChange colorScript;
+    private Color color;
+
     void Awake()
     {
         GameObject instance = GameObject.Find(this.gameObject.name);
@@ -31,6 +34,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        colorScript = GameObject.Find("ColorChange").GetComponent<ColorChange>();
         PhotonNetwork.ConnectUsingSettings();
         
     }
@@ -56,14 +60,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
  
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
-
         clone.GetComponent<PlayerBehaviour>().enabled = true;
-        /*カメラスクリプト
-        GameObject Bob = clone.transform.Find("Player").gameObject;
-        Bob.GetComponent<HeadBob>().enabled = true;
-        BobScript = Bob.GetComponent<HeadBob>();
-        */
-        
+
+        colorScript.setColor(clone);
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
@@ -111,4 +110,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.sceneLoaded += this.LeaveRoomLoaded;
         SceneManager.LoadScene("Login");
     }
+
+
 }

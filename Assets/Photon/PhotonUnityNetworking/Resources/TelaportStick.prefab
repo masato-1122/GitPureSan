@@ -185,6 +185,7 @@ MonoBehaviour:
   teleportEffect: {fileID: 2625452396982496741, guid: e9fe9205f7c833842ba0a10189c6110c,
     type: 3}
   effectLifeTime: 0
+  objName: Ball
 --- !u!1 &5705591424775832174
 GameObject:
   m_ObjectHideFlags: 0
