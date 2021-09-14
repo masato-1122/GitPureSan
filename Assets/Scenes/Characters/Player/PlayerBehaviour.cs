@@ -215,4 +215,10 @@ public class PlayerBehaviour : MonoBehaviour
         Text uitext = indicator.GetComponent<Text>();
         uitext.text = "";
     }
+
+    public void setColor()
+    {
+
+    }
+
 }

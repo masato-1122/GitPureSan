@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class ColorChange : MonoBehaviour
 {
     private GameObject redslider, greenslider, blueslider, alphaslider;
     private GameObject colPanel;
     private Color objColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,7 @@ public class ColorChange : MonoBehaviour
         return objColor;
     }
 
+    [PunRPC]
     public void setColor( GameObject player)
     {
         foreach (Transform childTransform in player.transform)

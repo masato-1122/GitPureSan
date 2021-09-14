@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// アイテム基本クラス
 /// </summary>
-public class ItemBehaviour : MonoBehaviour
+public class ItemBehaviour : MonoBehaviourPunCallbacks
 {
     public const int STATE_NORMAL = 0;
     public const int STATE_ABANDONED = 101;

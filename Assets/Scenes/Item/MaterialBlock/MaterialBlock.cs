@@ -16,7 +16,13 @@ public class MaterialBlock : ItemBehaviour, ItemReceiveMessage
     // Start is called before the first frame update
     void Start()
     {
+
         base.Start();
+        photonView = this.GetComponent<PhotonView>();
+        if (!photonView.IsMine)
+        {
+            return;
+        }
 
         // 属性の設定
         SetAttribute(ATTRIB_OWNABLE);
@@ -31,7 +37,6 @@ public class MaterialBlock : ItemBehaviour, ItemReceiveMessage
     // Update is called once per frame
     void Update()
     {
-
         base.Update();
         switch( state )
         {
@@ -70,8 +75,11 @@ public class MaterialBlock : ItemBehaviour, ItemReceiveMessage
     public void Damaged(GameObject attacker)
     {
         hp = hp - 1;
+
+        Vector3 offset = transform.position;
         // パーティクル表示
-        GameObject ptl = Instantiate(particle, transform.position, transform.rotation);
+        //GameObject ptl = Instantiate(particle, transform.position, transform.rotation);
+        GameObject ptl = PhotonNetwork.Instantiate(particle.name, offset, Quaternion.identity);
         if (hp <= 0)
         {
             // 自身を破壊  Photonネットワーク内での破棄

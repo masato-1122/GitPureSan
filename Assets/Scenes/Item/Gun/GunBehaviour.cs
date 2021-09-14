@@ -9,15 +9,20 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject muzzle = null;
     public GameObject bulletPrefab = null;
     public float initialVelocity = 50.0f;
-
+    private PhotonView photonView;
     // Start is called before the first frame update
     protected void Start()
     {
         base.Start();
+        photonView = this.GetComponent<PhotonView>();
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
-        heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
+        heldAngle = new Vector3(90.0f, 0.0f, 0.0f); 
     }
 
     // Update is called once per frame

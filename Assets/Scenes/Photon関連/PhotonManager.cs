@@ -38,10 +38,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         
     }
-
     
-    void OnGU()//サーバー接続状態の表示
+    /*
+    void OnGUI()
     {
+        //(new Rect(左上のｘ座標, 左上のｙ座標, 横幅, 縦幅), "テキスト", スタイル（今は省略）)
         GUILayout.Label("ClientState:" + PhotonNetwork.NetworkClientState);
         using (GUILayout.ScrollViewScope scrollView = new GUILayout.ScrollViewScope(scrollPosition, GUILayout.Width(400), GUILayout.Height(300)))
         {
@@ -49,6 +50,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             GUILayout.Label(logMessage);
         }
     }
+    */
     
 
     void JoinRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
@@ -61,8 +63,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
+        PhotonView photonView = clone.GetComponent<PhotonView>();
+        //colorScript.PRC("setColor", PhotonTargets.All, clone);
 
-        colorScript.setColor(clone);
+        cloneColor();
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
@@ -111,5 +115,62 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Login");
     }
 
+    public void cloneColor()
+    {
+        foreach (Transform childTransform in clone.transform)
+        {
+            //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力
+            foreach (Transform grandChildTransform in childTransform)
+            {
+                // Debug.Log("孫オブジェクト:" + grandChildTransform.gameObject.name); // 孫オブジェクト名を出力
+                if (grandChildTransform.gameObject.name == "Body")
+                {
+                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
+                }
+
+                if (grandChildTransform.gameObject.name == "RightHand")
+                {
+                    foreach (Transform grandChild2Transform in grandChildTransform)
+                    {
+                        foreach (Transform grandChild3Transform in grandChild2Transform)
+                        {
+                            foreach (Transform grandChild4Transform in grandChild3Transform)
+                            {
+                                foreach (Transform grandChild5Transform in grandChild4Transform)
+                                {
+                                    if (grandChild5Transform.gameObject.name == "ID20")
+                                    {
+                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (grandChildTransform.gameObject.name == "LeftHand")
+                {
+                    foreach (Transform grandChild2Transform in grandChildTransform)
+                    {
+                        foreach (Transform grandChild3Transform in grandChild2Transform)
+                        {
+                            foreach (Transform grandChild4Transform in grandChild3Transform)
+                            {
+                                foreach (Transform grandChild5Transform in grandChild4Transform)
+                                {
+                                    if (grandChild5Transform.gameObject.name == "ID20")
+                                    {
+                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
 
 }
