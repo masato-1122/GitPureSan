@@ -32,6 +32,7 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     }
 
     //
+    [PunRPC]
     public void Action( GameObject targetPoint )
     {
         GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;

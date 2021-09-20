@@ -36,9 +36,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(this.gameObject);
         colorScript = GameObject.Find("ColorChange").GetComponent<ColorChange>();
         PhotonNetwork.ConnectUsingSettings();
-        
+
     }
-    
+
     /*
     void OnGUI()
     {
@@ -51,22 +51,22 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
     */
-    
+
 
     void JoinRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        
+
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
- 
+
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         PhotonView photonView = clone.GetComponent<PhotonView>();
         //colorScript.PRC("setColor", PhotonTargets.All, clone);
 
-        cloneColor();
+        cloneChangeColor();
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
@@ -115,7 +115,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Login");
     }
 
-    public void cloneColor()
+    public enum playerColor:int
+    {
+        
+    }
+
+    public void cloneChangeColor()
     {
         foreach (Transform childTransform in clone.transform)
         {

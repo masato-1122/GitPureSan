@@ -75,6 +75,8 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         targeted = false;
     }
 
+
+
     // 状態：通常
     protected void stateNormal()
     {

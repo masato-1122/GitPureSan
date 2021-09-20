@@ -16,6 +16,9 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject particle = null;
 
     private PhotonView photonView;
+    private Rigidbody rigidbody;
+    private Vector3 networkPosition;
+    private Quaternion networkRotation;
 
     // Start is called before the first frame update
     protected void Start()
@@ -26,6 +29,8 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
+
+        rigidbody = this.GetComponent<Rigidbody>();
 
         now = 0.0f;
         targetObject = null;
@@ -55,6 +60,36 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
             case STATE_BREAK:
                 stateBreak();
                 break;
+        }
+    }
+
+    /*
+    public void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            this.rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
+            this.rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+    */
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(this.rigidbody.position);
+            stream.SendNext(this.rigidbody.rotation);
+            stream.SendNext(this.rigidbody.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            rigidbody.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
+            networkPosition += (this.rigidbody.velocity * lag);
         }
     }
 
