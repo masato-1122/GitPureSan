@@ -13,13 +13,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private Vector2 scrollPosition;
     private RigidbodyFirstPersonController RigidScript;
     private PlayerBehaviour PlayerScript;
-    private GameObject clone;
+    public GameObject clone;
     private HeadBob BobScript;
     public string playerName;
     private bool itemFlag = true;
 
-    private ColorChange colorScript;
     private Color color;
+    private PhotonView photonView;
 
     void Awake()
     {
@@ -27,19 +27,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (instance.gameObject != this.gameObject)
         {
             Destroy(this.gameObject);
-
         }
     }
 
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        colorScript = GameObject.Find("ColorChange").GetComponent<ColorChange>();
         PhotonNetwork.ConnectUsingSettings();
-
     }
 
-    /*
+    
     void OnGUI()
     {
         //(new Rect(左上のｘ座標, 左上のｙ座標, 横幅, 縦幅), "テキスト", スタイル（今は省略）)
@@ -50,7 +47,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             GUILayout.Label(logMessage);
         }
     }
-    */
+    
 
 
     void JoinRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
@@ -59,14 +56,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
-
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
-        PhotonView photonView = clone.GetComponent<PhotonView>();
-        //colorScript.PRC("setColor", PhotonTargets.All, clone);
 
-        cloneChangeColor();
+        //プレイヤーの服色設定
+        photonView = clone.GetComponent<PhotonView>();
+        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
@@ -80,7 +76,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions(), TypedLobby.Default);
-
     }
 
     public void LogoutRoom()
@@ -115,67 +110,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Login");
     }
 
-    public enum playerColor:int
+    public Color getClothColor()
     {
-        
+        return color;
     }
 
-    public void cloneChangeColor()
+    public void setColor( Color clothColor)
     {
-        foreach (Transform childTransform in clone.transform)
-        {
-            //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力
-            foreach (Transform grandChildTransform in childTransform)
-            {
-                // Debug.Log("孫オブジェクト:" + grandChildTransform.gameObject.name); // 孫オブジェクト名を出力
-                if (grandChildTransform.gameObject.name == "Body")
-                {
-                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
-                }
-
-                if (grandChildTransform.gameObject.name == "RightHand")
-                {
-                    foreach (Transform grandChild2Transform in grandChildTransform)
-                    {
-                        foreach (Transform grandChild3Transform in grandChild2Transform)
-                        {
-                            foreach (Transform grandChild4Transform in grandChild3Transform)
-                            {
-                                foreach (Transform grandChild5Transform in grandChild4Transform)
-                                {
-                                    if (grandChild5Transform.gameObject.name == "ID20")
-                                    {
-                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (grandChildTransform.gameObject.name == "LeftHand")
-                {
-                    foreach (Transform grandChild2Transform in grandChildTransform)
-                    {
-                        foreach (Transform grandChild3Transform in grandChild2Transform)
-                        {
-                            foreach (Transform grandChild4Transform in grandChild3Transform)
-                            {
-                                foreach (Transform grandChild5Transform in grandChild4Transform)
-                                {
-                                    if (grandChild5Transform.gameObject.name == "ID20")
-                                    {
-                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = colorScript.getColor();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-
-        }
+        color = clothColor;
     }
-
 }

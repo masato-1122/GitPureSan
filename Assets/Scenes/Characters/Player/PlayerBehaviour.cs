@@ -216,9 +216,65 @@ public class PlayerBehaviour : MonoBehaviour
         uitext.text = "";
     }
 
-    public void setColor()
+    [PunRPC]
+    public void setClothColor()
     {
+        Color playerColor = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().getClothColor();
+        GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
+        foreach (Transform childTransform in clone.transform)
+        {
+            //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力
+            foreach (Transform grandChildTransform in childTransform)
+            {
+                // Debug.Log("孫オブジェクト:" + grandChildTransform.gameObject.name); // 孫オブジェクト名を出力
+                if (grandChildTransform.gameObject.name == "Body")
+                {
+                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = playerColor;
+                }
 
+                if (grandChildTransform.gameObject.name == "RightHand")
+                {
+                    foreach (Transform grandChild2Transform in grandChildTransform)
+                    {
+                        foreach (Transform grandChild3Transform in grandChild2Transform)
+                        {
+                            foreach (Transform grandChild4Transform in grandChild3Transform)
+                            {
+                                foreach (Transform grandChild5Transform in grandChild4Transform)
+                                {
+                                    if (grandChild5Transform.gameObject.name == "ID20")
+                                    {
+                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = playerColor;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (grandChildTransform.gameObject.name == "LeftHand")
+                {
+                    foreach (Transform grandChild2Transform in grandChildTransform)
+                    {
+                        foreach (Transform grandChild3Transform in grandChild2Transform)
+                        {
+                            foreach (Transform grandChild4Transform in grandChild3Transform)
+                            {
+                                foreach (Transform grandChild5Transform in grandChild4Transform)
+                                {
+                                    if (grandChild5Transform.gameObject.name == "ID20")
+                                    {
+                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = playerColor;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
     }
 
 }

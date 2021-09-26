@@ -61,18 +61,23 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
                 stateBreak();
                 break;
         }
+        Debug.Log(this.rigidbody.position);
     }
 
-    /*
+    
     public void FixedUpdate()
     {
         if (!photonView.IsMine)
+        {
+            return;
+        }
+        else
         {
             this.rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
             this.rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
         }
     }
-    */
+    
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -80,13 +85,12 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             stream.SendNext(this.rigidbody.position);
             stream.SendNext(this.rigidbody.rotation);
-            stream.SendNext(this.rigidbody.velocity);
+            Debug.Log("Streaming");
         }
         else
         {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkRotation = (Quaternion)stream.ReceiveNext();
-            rigidbody.velocity = (Vector3)stream.ReceiveNext();
+            this.rigidbody.position = (Vector3)stream.ReceiveNext();
+            this.rigidbody.rotation = (Quaternion)stream.ReceiveNext();
 
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
             networkPosition += (this.rigidbody.velocity * lag);
