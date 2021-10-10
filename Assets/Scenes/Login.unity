@@ -783,10 +783,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.MonoBehaviour, UnityEngine
-        m_MethodName: 
-        m_Mode: 5
+      - m_Target: {fileID: 518928674}
+        m_TargetAssemblyTypeName: ColorChange, Assembly-CSharp
+        m_MethodName: enterColor
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1754,7 +1754,7 @@ GameObject:
   - component: {fileID: 1383156707}
   m_Layer: 0
   m_Name: PhotonManager
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1773,6 +1773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clone: {fileID: 0}
   playerName: 
+  namePrefab: {fileID: 5220390080762072820, guid: fbf0b736faa171043b244f32771aa53f,
+    type: 3}
 --- !u!4 &1383156708
 Transform:
   m_ObjectHideFlags: 0
@@ -2020,7 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

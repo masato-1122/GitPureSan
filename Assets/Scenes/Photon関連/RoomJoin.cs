@@ -29,10 +29,8 @@ public class RoomJoin : MonoBehaviour
             {
                 // ルームに接続
                 this.photonManager.JoinRoom(this.RoomNameField.text);
-                this.photonManager.setColor(GameObject.Find("ColorChange").GetComponent<ColorChange>().getColor());
                 //プレイヤーの名前を渡す
                 PhotonNetwork.NickName = _playerName;
-                Debug.Log(PhotonNetwork.NickName);
             }
 
             else

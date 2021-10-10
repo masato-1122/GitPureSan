@@ -15,7 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Camera camera;
     public GameObject dbboard = null;  // デバッグ表示
 
-
+    //現体力、最大体力
     public static int hp;
     public static int maxHp = 50;
     public static int ammo;
@@ -34,7 +34,11 @@ public class PlayerBehaviour : MonoBehaviour
     public Camera mainCamera = null;
     public Camera tpCamera = null;
 
+    private PhotonManager photonManager;
     private PhotonView photonView;
+
+    public GameObject canvas;
+    public Text nameText;
 
     // Start is called before the first frame update
     void Start()
@@ -53,8 +57,11 @@ public class PlayerBehaviour : MonoBehaviour
         camera = mainCamera;
         dbboard = GameObject.FindWithTag("DDBoard");
         indicator = GameObject.FindWithTag("indicator");
+
         this.mainCamera.depth = 0;
         this.tpCamera.depth = 0;
+
+        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
     }
 
     // Update is called once per frame
@@ -208,6 +215,22 @@ public class PlayerBehaviour : MonoBehaviour
                 camera = mainCamera;
             }
         }
+
+        //プレイヤーの体力に応じて体の色が変化
+        if( (hp / maxHp) * 100 >= 50 )
+        {
+            //体がオレンジ色に変化
+            //color(1, 0.5, 0, 1);
+            Color orange = new Color( 1, 1/2, 0, 1 );
+            photonManager.setBodyColor( orange);
+        }
+        else if( (hp / maxHp ) * 100 <= 50)
+        {
+            //体が赤に変化
+            //color(1, 0, 0, 1);
+            Color red = new Color(1, 0, 0, 1);
+            photonManager.setColor( red);
+        }
     }
 
     private void clearIndicator()
@@ -216,6 +239,32 @@ public class PlayerBehaviour : MonoBehaviour
         uitext.text = "";
     }
 
+    [PunRPC]
+    public void setName(string n)
+    {
+        nameText.text = n;
+    }
+
+    /*
+    //プレイヤーの体の色を変化
+    [PunRPC]
+    public void setBodyColor(GameObject pl)
+    {
+        Color bodyColor = new Color( 1, 1, 1, 1);
+        foreach( Transform childTransform in pl.transform)
+        {
+            foreach( Transform grandChildTransform in childTransform)
+            {
+                if( grandChildTransform.gameObject.name == "Head")
+                {
+                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = bodyColor;
+                }
+            }
+        }
+    }
+    */
+
+    //プレイヤーの服の色が変化
     [PunRPC]
     public void setClothColor()
     {
@@ -272,9 +321,8 @@ public class PlayerBehaviour : MonoBehaviour
                     }
                 }
             }
-
-
         }
+
     }
 
 }

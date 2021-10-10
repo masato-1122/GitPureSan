@@ -13,13 +13,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private Vector2 scrollPosition;
     private RigidbodyFirstPersonController RigidScript;
     private PlayerBehaviour PlayerScript;
-    public GameObject clone;
+    public GameObject clone = null;
     private HeadBob BobScript;
-    public string playerName;
+    public string playerName = null;
     private bool itemFlag = true;
 
-    private Color color;
+    //プレイヤーの服の色、体の色
+    private Color clothColor;
+    private Color bodyColor;
     private PhotonView photonView;
+
+    //名前表示オブジェクト
+    private GameObject namePanel;
 
     void Awake()
     {
@@ -35,7 +40,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(this.gameObject);
         PhotonNetwork.ConnectUsingSettings();
     }
-
     
     void OnGUI()
     {
@@ -47,25 +51,42 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             GUILayout.Label(logMessage);
         }
     }
-    
-
 
     void JoinRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
-
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
+        
+        
+
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
 
         //プレイヤーの服色設定
         photonView = clone.GetComponent<PhotonView>();
-        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
+
+        //個別処理をどうするか
+        photonView.RPC("setClothColor", RpcTarget.AllBuffered);
+        photonView.RPC("setName", RpcTarget.AllBuffered, PhotonNetwork.NickName);
+        //photonView.RPC("setBodyColor", RpcTarget.AllBufferedViaServer, clone);
+
+        ///プレイヤーの名前表示テキスト出現
+        ///どちらが良いか検証中
+        ///1.名前テキストを単独で出現させ、プレイヤーの頭上に追従させる
+        ///2.プレイヤーに事前に名前テキストを付け、プレイヤーと同時に出現させる
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
+
+    void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        Debug.Log("テスト");
+        // 例えば このゲームオブジェクトをこのプレイヤーのキャラクターとしてPlayer.TagObjectに保存します
+       /// info.sender.TagObject = this.GameObject;
+    }
+
 
     void LeaveRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
@@ -110,13 +131,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Login");
     }
 
+
     public Color getClothColor()
     {
-        return color;
+        return clothColor;
     }
 
-    public void setColor( Color clothColor)
+    public Color getBodyColor()
     {
-        color = clothColor;
+        return bodyColor;
+    }
+
+    public void setColor( Color c)
+    {
+        clothColor = c;
+    }
+
+    public void setBodyColor( Color c)
+    {
+        bodyColor = c;
     }
 }

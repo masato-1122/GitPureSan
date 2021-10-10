@@ -12,6 +12,8 @@ TagManager:
   - FACILITY
   - indicator
   - DDBoard
+  - Manager
+  - NameText
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class ColorChange : MonoBehaviour
     private GameObject redslider, greenslider, blueslider, alphaslider;
     private GameObject colPanel;
     private Color objColor;
+    private PhotonManager photonManager;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class ColorChange : MonoBehaviour
         this.greenslider = GameObject.Find("GreenSlider");
         this.blueslider = GameObject.Find("BlueSlider");
         this.colPanel = GameObject.Find("colorPanel");
+        this.photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
     }
 
     // Update is called once per frame
@@ -32,5 +34,10 @@ public class ColorChange : MonoBehaviour
     public Color getColor()
     {
         return objColor;
+    }
+
+    public void enterColor()
+    {
+        this.photonManager.setColor(getColor());
     }
 }
