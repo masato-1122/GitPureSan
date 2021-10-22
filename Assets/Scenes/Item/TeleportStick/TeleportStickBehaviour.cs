@@ -78,7 +78,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
                 GameObject effect = PhotonNetwork.InstantiateRoomObject(teleportEffect.name, target.transform.position, Quaternion.Euler(-90, 0, 0));
                 int time = 0;
                 time++;
-                if (time >= effectLifeTime)
+                if (time >= effectLifeTime && effect != null)
                 {
                     PhotonNetwork.Destroy(effect);
                     time = 0;

@@ -35,7 +35,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Camera tpCamera = null;
 
     private PhotonManager photonManager;
-    private PhotonView photonView;
+    public PhotonView photonView;
 
     public GameObject canvas;
     public Text nameText;
@@ -216,6 +216,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
+        /*
         //プレイヤーの体力に応じて体の色が変化
         if( (hp / maxHp) * 100 >= 50 )
         {
@@ -231,6 +232,7 @@ public class PlayerBehaviour : MonoBehaviour
             Color red = new Color(1, 0, 0, 1);
             photonManager.setColor( red);
         }
+        */
     }
 
     private void clearIndicator()
@@ -248,10 +250,11 @@ public class PlayerBehaviour : MonoBehaviour
     /*
     //プレイヤーの体の色を変化
     [PunRPC]
-    public void setBodyColor(GameObject pl)
+    public void setBodyColor()
     {
-        Color bodyColor = new Color( 1, 1, 1, 1);
-        foreach( Transform childTransform in pl.transform)
+        Color playerBodyColor = 
+        GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
+        foreach( Transform childTransform in clone.transform)
         {
             foreach( Transform grandChildTransform in childTransform)
             {

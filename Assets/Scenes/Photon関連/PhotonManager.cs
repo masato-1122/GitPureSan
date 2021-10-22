@@ -25,15 +25,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     //名前表示オブジェクト
     private GameObject namePanel;
-
-    void Awake()
-    {
-        GameObject instance = GameObject.Find(this.gameObject.name);
-        if (instance.gameObject != this.gameObject)
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    public GameObject namePrefab;
 
     void Start()
     {
@@ -69,8 +61,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         //個別処理をどうするか
         photonView.RPC("setClothColor", RpcTarget.AllBuffered);
-        photonView.RPC("setName", RpcTarget.AllBuffered, PhotonNetwork.NickName);
-        //photonView.RPC("setBodyColor", RpcTarget.AllBufferedViaServer, clone);
+
 
         ///プレイヤーの名前表示テキスト出現
         ///どちらが良いか検証中
@@ -78,13 +69,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         ///2.プレイヤーに事前に名前テキストを付け、プレイヤーと同時に出現させる
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
-    }
-
-    void OnPhotonInstantiate(PhotonMessageInfo info)
-    {
-        Debug.Log("テスト");
-        // 例えば このゲームオブジェクトをこのプレイヤーのキャラクターとしてPlayer.TagObjectに保存します
-       /// info.sender.TagObject = this.GameObject;
     }
 
 
