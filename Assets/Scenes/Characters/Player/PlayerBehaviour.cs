@@ -216,23 +216,10 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
-        /*
-        //プレイヤーの体力に応じて体の色が変化
-        if( (hp / maxHp) * 100 >= 50 )
+        if (Input.GetKeyUp(KeyCode.O))
         {
-            //体がオレンジ色に変化
-            //color(1, 0.5, 0, 1);
-            Color orange = new Color( 1, 1/2, 0, 1 );
-            photonManager.setBodyColor( orange);
+            photonView.RPC("setClothColor", RpcTarget.AllBuffered,photonManager.clone);
         }
-        else if( (hp / maxHp ) * 100 <= 50)
-        {
-            //体が赤に変化
-            //color(1, 0, 0, 1);
-            Color red = new Color(1, 0, 0, 1);
-            photonManager.setColor( red);
-        }
-        */
     }
 
     private void clearIndicator()
@@ -269,10 +256,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     //プレイヤーの服の色が変化
     [PunRPC]
-    public void setClothColor()
+    public void setClothColor(GameObject clone)
     {
         Color playerColor = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().getClothColor();
-        GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
+        //GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
         foreach (Transform childTransform in clone.transform)
         {
             //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力

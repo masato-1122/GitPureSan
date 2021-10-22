@@ -13,7 +13,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private Vector2 scrollPosition;
     private RigidbodyFirstPersonController RigidScript;
     private PlayerBehaviour PlayerScript;
-    public GameObject clone = null;
+    public GameObject clone;
     private HeadBob BobScript;
     public string playerName = null;
     private bool itemFlag = true;
@@ -55,13 +55,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
-
-        //プレイヤーの服色設定
-        photonView = clone.GetComponent<PhotonView>();
-
-        //個別処理をどうするか
-        photonView.RPC("setClothColor", RpcTarget.AllBuffered);
-
 
         ///プレイヤーの名前表示テキスト出現
         ///どちらが良いか検証中
