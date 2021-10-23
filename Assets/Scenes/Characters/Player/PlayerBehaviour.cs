@@ -215,11 +215,6 @@ public class PlayerBehaviour : MonoBehaviour
                 camera = mainCamera;
             }
         }
-
-        if (Input.GetKeyUp(KeyCode.O))
-        {
-            photonView.RPC("setClothColor", RpcTarget.AllBuffered,photonManager.clone);
-        }
     }
 
     private void clearIndicator()
@@ -256,10 +251,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     //プレイヤーの服の色が変化
     [PunRPC]
-    public void setClothColor(GameObject clone)
+    public void setClothColor()
     {
         Color playerColor = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().getClothColor();
-        //GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
+        GameObject clone = this.gameObject;
         foreach (Transform childTransform in clone.transform)
         {
             //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力
