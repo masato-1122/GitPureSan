@@ -253,6 +253,10 @@ public class PlayerBehaviour : MonoBehaviour
     [PunRPC]
     public void setClothColor()
     {
+        if( !photonView.IsMine)
+        {
+            return;
+        }
         Color playerColor = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().getClothColor();
         GameObject clone = this.gameObject;
         foreach (Transform childTransform in clone.transform)
