@@ -33,6 +33,11 @@ public class SinkingBlock : MonoBehaviour
 		}
 	}
 
+	public void tst()
+    {
+
+    }
+
 	private void OnCollisionExit(Collision collision)
 	{
 		if (collision.gameObject.tag == "Player")
