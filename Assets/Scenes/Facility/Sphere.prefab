@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 7360903204193423666}
   - component: {fileID: 4834048099157807561}
   - component: {fileID: 7231001301628642436}
+  - component: {fileID: 6656306286484995839}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -624,6 +625,21 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6656306286484995839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591363403336128975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9bcd64f8096b544aea3a526c380d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  width: 4
+  height: 4
 --- !u!1 &8394172084899456394
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +766,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.32526863, y: 0.568514, z: -0.9159999}
+  m_ConnectedAnchor: {x: 3.2000008, y: 13.215999, z: -22.98}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -900,7 +916,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.800001, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -0.80000013, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
