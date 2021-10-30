@@ -27,16 +27,13 @@ public class SinkingBlock : MonoBehaviour
 			characterIsOnBoard = true;
 
 		}
+		/*
 		if (collision.gameObject.tag == "WALL")
 		{
 			velocity = Vector3.zero;
 		}
+		*/
 	}
-
-	public void tst()
-    {
-
-    }
 
 	private void OnCollisionExit(Collision collision)
 	{
@@ -44,8 +41,6 @@ public class SinkingBlock : MonoBehaviour
 		{
 			characterIsOnBoard = false;
 		}
-
-		
 	}
 
 

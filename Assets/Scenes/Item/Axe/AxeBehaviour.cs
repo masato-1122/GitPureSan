@@ -61,7 +61,6 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
                 stateBreak();
                 break;
         }
-        Debug.Log(this.rigidbody.position);
     }
 
     
