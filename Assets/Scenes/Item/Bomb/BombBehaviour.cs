@@ -8,8 +8,8 @@ using Photon.Realtime;
 public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
 {
     private PhotonView photonView;
-    private int timer;
-    protected float now;
+    private float timer;
+    public GameObject explosionEffect = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +20,11 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
-        now = 0;
+        timer = 0;
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
-        heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
+        heldAngle = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
     // Update is called once per frame
@@ -33,12 +33,6 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         if (!photonView.IsMine)
         {
             return;
-        }
-        now += Time.deltaTime;
-        if (now >= 0.1f)
-        {
-            transform.localEulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-            now = 0.0f;
         }
         base.Update();
     }
@@ -49,10 +43,14 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         
     }
 
-    // （必須）アイテムの機能を使う
+    // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
+        timer += Time.deltaTime;
+        if (timer >= 3)
+        {
 
+        }
     }
 
     public void Damaged(GameObject attacker)
