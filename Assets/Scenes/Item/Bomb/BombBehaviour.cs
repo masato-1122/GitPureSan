@@ -10,6 +10,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     private PhotonView photonView;
     private float timer;
     public GameObject explosionEffect = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +41,10 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     // （必須）アイテムの機能を対象物に使う
     public void ActionForTargetedObject(GameObject target)
     {
-        
+        if (explosionEffect != null)
+        {
+            GameObject effect = PhotonNetwork.InstantiateRoomObject(explosionEffect.name, target.transform.position, Quaternion.Euler(0, 0, 0));
+        }
     }
 
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
