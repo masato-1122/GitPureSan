@@ -11,7 +11,7 @@ public class SinkingBlock : MonoBehaviour
 	private float returnSpeed = 2f;
 	[SerializeField]
 	private float sinkingSpeed = 2f;
-	private bool characterIsOnBoard;
+	private bool characterIsOnBoard = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -59,7 +59,7 @@ public class SinkingBlock : MonoBehaviour
 	private void FixedUpdate()
 	{
 		//　移動が上向き（元に戻る向き）で初期位置以上の場合は移動させない
-		if (velocity.y > 0f && rigidBody.position.y >= defaultPosition.y)
+		if (!characterIsOnBoard && rigidBody.position.y >= defaultPosition.y)
 		{
 			//　完全に移動させる
 			rigidBody.MovePosition(defaultPosition);

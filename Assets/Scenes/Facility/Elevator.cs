@@ -15,21 +15,6 @@ public class Elevator : MonoBehaviour
         defaultPos = transform.position;
     }
 
-    /*
-    void Update()
-    {
-        switch(state)
-        {
-            case 0:
-                Up();
-                break;
-            case 1:
-                Down();
-                break;
-        }
-    }
-    */
-
     void FixedUpdate()
     {
         transform.position += new Vector3(0f, speed, 0f);

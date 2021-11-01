@@ -8,8 +8,10 @@ using Photon.Realtime;
 public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
 {
     private PhotonView photonView;
+    private bool timerFlag;
     private float timer;
-    public GameObject explosionEffect = null;
+    public GameObject explosionEffect;
+    protected int hp = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
+        timerFlag = false;
         timer = 0;
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
@@ -35,6 +38,11 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
+
+        if( timerFlag)
+        {
+            timer += Time.deltaTime;
+        }
         base.Update();
     }
 
@@ -43,22 +51,28 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     {
         if (explosionEffect != null)
         {
-            GameObject effect = PhotonNetwork.InstantiateRoomObject(explosionEffect.name, target.transform.position, Quaternion.Euler(0, 0, 0));
+            Vector3 offset = gameObject.transform.position;
+            if (timer >= 7f)
+            {
+                GameObject ptl = PhotonNetwork.Instantiate(explosionEffect.name, offset, Quaternion.identity);
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
-        timer += Time.deltaTime;
-        if (timer >= 3)
-        {
+        timerFlag = true;
 
-        }
     }
 
     public void Damaged(GameObject attacker)
     {
-        // Nothing
+        hp -= 1;
+        if (hp <= 0)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 }
