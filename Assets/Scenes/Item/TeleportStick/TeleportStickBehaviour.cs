@@ -15,6 +15,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     [SerializeField]private string objName;
     private Vector3 offset;
 
+
     protected void Start()
     {
         base.Start();
