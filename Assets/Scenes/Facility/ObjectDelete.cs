@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class ObjectDelete : MonoBehaviour
 {
@@ -17,17 +18,15 @@ public class ObjectDelete : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        GameObject item = collider.gameObject;
-        if ( item.CompareTag("OBJECT"))
+        GameObject item = collision.gameObject;
+        if (item.CompareTag("OBJECT"))
         {
-            
-            item.GetComponent<ItemBehaviour>().SetAbandoned();  
+            item.GetComponent<ItemBehaviour>().SetAbandoned();
             PhotonNetwork.Destroy(item);
-            
         }
-        if( item.CompareTag("Player"))
+        if (item.CompareTag("Player"))
         {
             itemDelete(item);
         }
@@ -40,31 +39,31 @@ public class ObjectDelete : MonoBehaviour
         {
             foreach (Transform grandChildTransform in child)
             {
-                if (grandChildTransform.gameObject.name == "RightHand")
-                {
-                    GameObject rightHand = grandChildTransform.gameObject;
-                    GameObject rightItem = rightHand.GetComponent<HandBehaviour>().DropItem();
-                    if (rightItem != null)
-                    {
-                        rightItem.transform.parent = null;
-                        rightItem.transform.position = player.transform.position;
-                        rightItem.transform.rotation = Quaternion.identity;
-                        rightItem.GetComponent<ItemBehaviour>().SetAbandoned();
-                        PhotonNetwork.Destroy(rightItem);
-                    }
-                }
-
                 if (grandChildTransform.gameObject.name == "LeftHand")
                 {
                     GameObject leftHand = grandChildTransform.gameObject;
-                    GameObject leftItem = leftHand.GetComponent<HandBehaviour>().DropItem();
-                    if (leftItem != null)
+                    GameObject dropItem = leftHand.GetComponent<HandBehaviour>().DropItem();
+                    if (dropItem != null)
                     {
-                        leftItem.transform.parent = null;
-                        leftItem.transform.position = player.transform.position;
-                        leftItem.transform.rotation = Quaternion.identity;
-                        leftItem.GetComponent<ItemBehaviour>().SetAbandoned();
-                        PhotonNetwork.Destroy(leftItem);
+                        dropItem.transform.parent = null;
+                        dropItem.transform.position = player.transform.position;
+                        dropItem.transform.rotation = Quaternion.identity;
+                        dropItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                        PhotonNetwork.Destroy(dropItem);
+                    }
+                }
+
+                if (grandChildTransform.gameObject.name == "RightHand")
+                {
+                    GameObject rightHand = grandChildTransform.gameObject;
+                    GameObject dropItem = rightHand.GetComponent<HandBehaviour>().DropItem();
+                    if (dropItem != null)
+                    {
+                        dropItem.transform.parent = null;
+                        dropItem.transform.position = player.transform.position;
+                        dropItem.transform.rotation = Quaternion.identity;
+                        dropItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                        PhotonNetwork.Destroy(dropItem);
                     }
                 }
             }
