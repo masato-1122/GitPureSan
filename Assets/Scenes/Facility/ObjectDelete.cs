@@ -22,10 +22,9 @@ public class ObjectDelete : MonoBehaviour
         GameObject item = collider.gameObject;
         if ( item.CompareTag("OBJECT"))
         {
-            /*
+            
             item.GetComponent<ItemBehaviour>().SetAbandoned();  
             PhotonNetwork.Destroy(item);
-            */
             
         }
         if( item.CompareTag("Player"))
