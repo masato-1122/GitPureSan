@@ -7,11 +7,14 @@ using Photon.Realtime;
 
 public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
 {
-    private PhotonView photonView;
-    private bool timerFlag;
-    private float timer;
-    public GameObject explosionEffect;
     protected int hp = 5;
+    private PhotonView photonView;
+
+    private Rigidbody rb;
+
+    private Vector3 force;
+    private float forceMagnitude = 10.0f;
+    private Vector3 forceDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +26,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
-        timerFlag = false;
-        timer = 0;
+        rb = gameObject.GetComponent<Rigidbody>();
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
@@ -38,33 +40,21 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             return;
         }
-
-        if( timerFlag)
-        {
-            timer += Time.deltaTime;
-        }
         base.Update();
+        forceDirection = gameObject.transform.position;
     }
 
     // （必須）アイテムの機能を対象物に使う
     public void ActionForTargetedObject(GameObject target)
     {
-        if (explosionEffect != null)
-        {
-            Vector3 offset = gameObject.transform.position;
-            if (timer >= 7f)
-            {
-                GameObject ptl = PhotonNetwork.Instantiate(explosionEffect.name, offset, Quaternion.identity);
-                PhotonNetwork.Destroy(gameObject);
-            }
-        }
+
     }
 
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
-        timerFlag = true;
 
+        //PhotonNetwork.Destroy(gameObject);
     }
 
     public void Damaged(GameObject attacker)
@@ -74,5 +64,11 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             PhotonNetwork.Destroy(gameObject);
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
     }
 }

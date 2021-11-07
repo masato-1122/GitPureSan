@@ -32,5 +32,10 @@ public class BulletBehaviour : MonoBehaviour
                 eventData: null,
                 functor: (receiver, eventData) => receiver.setDead());
         }
+        if(collisionInfo.gameObject.tag == "OBJECT")
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 }

@@ -19,15 +19,45 @@ public class ObjectDelete : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        
         GameObject item = collider.gameObject;
-        if ( collider.gameObject.CompareTag("OBJECT"))
+        if ( item.CompareTag("OBJECT"))
         {
+            /*
+            item.GetComponent<ItemBehaviour>().SetAbandoned();  
+            PhotonNetwork.Destroy(item);
+            */
             
-            if ( item.GetComponent<ItemBehaviour>().IsAbandoned() == true)
+        }
+        if( item.CompareTag("Player"))
+        {
+            itemDelete(item);
+        }
+    }
+
+    void itemDelete(GameObject player)
+    {
+        foreach (Transform childTransform in player.transform)
+        {
+            GameObject Hands = childTransform.gameObject;
+            if (Hands.name == "RightHand")
             {
-                Debug.Log("êGÇÍÇΩ");
-                PhotonNetwork.Destroy(item);
+                GameObject rightItem = Hands.GetComponent<HandBehaviour>().DropItem();
+                if (rightItem != null)
+                {
+                    rightItem.transform.parent = null;
+                    rightItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                    PhotonNetwork.Destroy(rightItem);
+                }
+            }
+            if (Hands.name == "LeftHand")
+            {
+                GameObject leftItem = Hands.GetComponent<HandBehaviour>().DropItem();
+                if (leftItem != null)
+                {
+                    leftItem.transform.parent = null;
+                    leftItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                    PhotonNetwork.Destroy(leftItem);
+                }
             }
         }
     }

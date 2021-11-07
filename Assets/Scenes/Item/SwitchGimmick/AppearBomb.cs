@@ -20,6 +20,7 @@ public class AppearBomb : MonoBehaviour
         {
             float posX = Random.Range(40, 50);
             GameObject item = PhotonNetwork.Instantiate("Bomb", new Vector3(posX, 0.5f, -91f), Quaternion.identity);
+            item.GetComponent<ItemBehaviour>().SetAbandoned();
         }
     }
 }

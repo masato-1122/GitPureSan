@@ -25,6 +25,7 @@ public class AppearAxe : MonoBehaviour
         {
             float posX = Random.Range(40, 50);
             GameObject item = PhotonNetwork.Instantiate("Axe", new Vector3(posX, 0.5f, -87f), Quaternion.identity);
+            item.GetComponent<ItemBehaviour>().SetAbandoned();
         }
     }
 }

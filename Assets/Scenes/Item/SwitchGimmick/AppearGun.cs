@@ -25,6 +25,7 @@ public class AppearGun : MonoBehaviour
         {
             float posX = Random.Range(40, 50);
             GameObject item = PhotonNetwork.Instantiate("Gun", new Vector3(posX, 0.5f, -88f), Quaternion.identity);
+            item.GetComponent<ItemBehaviour>().SetAbandoned();
         }
     }
 }

@@ -22,6 +22,7 @@ public class AppearStick : MonoBehaviour
             float posX = Random.Range(40, 50);
             //item = Instantiate( item, new Vector3( posX, 3f, -85f), Quaternion.identity);
             item = PhotonNetwork.Instantiate("TelaportStick", new Vector3(posX, 1f, -90f), Quaternion.identity);
+            item.GetComponent<ItemBehaviour>().SetAbandoned();
         }
     }
 }
