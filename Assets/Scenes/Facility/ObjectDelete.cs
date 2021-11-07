@@ -34,29 +34,39 @@ public class ObjectDelete : MonoBehaviour
         }
     }
 
+
     void itemDelete(GameObject player)
     {
-        foreach (Transform childTransform in player.transform)
+        foreach (Transform child in player.transform)
         {
-            GameObject Hands = childTransform.gameObject;
-            if (Hands.name == "RightHand")
+            foreach (Transform grandChildTransform in child)
             {
-                GameObject rightItem = Hands.GetComponent<HandBehaviour>().DropItem();
-                if (rightItem != null)
+                if (grandChildTransform.gameObject.name == "RightHand")
                 {
-                    rightItem.transform.parent = null;
-                    rightItem.GetComponent<ItemBehaviour>().SetAbandoned();
-                    PhotonNetwork.Destroy(rightItem);
+                    GameObject rightHand = grandChildTransform.gameObject;
+                    GameObject rightItem = rightHand.GetComponent<HandBehaviour>().DropItem();
+                    if (rightItem != null)
+                    {
+                        rightItem.transform.parent = null;
+                        rightItem.transform.position = player.transform.position;
+                        rightItem.transform.rotation = Quaternion.identity;
+                        rightItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                        PhotonNetwork.Destroy(rightItem);
+                    }
                 }
-            }
-            if (Hands.name == "LeftHand")
-            {
-                GameObject leftItem = Hands.GetComponent<HandBehaviour>().DropItem();
-                if (leftItem != null)
+
+                if (grandChildTransform.gameObject.name == "LeftHand")
                 {
-                    leftItem.transform.parent = null;
-                    leftItem.GetComponent<ItemBehaviour>().SetAbandoned();
-                    PhotonNetwork.Destroy(leftItem);
+                    GameObject leftHand = grandChildTransform.gameObject;
+                    GameObject leftItem = leftHand.GetComponent<HandBehaviour>().DropItem();
+                    if (leftItem != null)
+                    {
+                        leftItem.transform.parent = null;
+                        leftItem.transform.position = player.transform.position;
+                        leftItem.transform.rotation = Quaternion.identity;
+                        leftItem.GetComponent<ItemBehaviour>().SetAbandoned();
+                        PhotonNetwork.Destroy(leftItem);
+                    }
                 }
             }
         }
