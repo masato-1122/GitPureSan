@@ -4,17 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-
 public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
 {
+    public GameObject bombPrefab;
     protected int hp = 5;
     private PhotonView photonView;
 
     private Rigidbody rb;
 
     private Vector3 force;
-    private float forceMagnitude = 10.0f;
-    private Vector3 forceDirection;
+    public float initialVelocity = 25.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +40,6 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
             return;
         }
         base.Update();
-        forceDirection = gameObject.transform.position;
     }
 
     // （必須）アイテムの機能を対象物に使う
@@ -53,7 +51,10 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
-
+        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+        //GameObject bullet = PhotonNetwork.Instantiate("Bullet", muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
+        //Destroy(gameObject);
         //PhotonNetwork.Destroy(gameObject);
     }
 
@@ -64,11 +65,5 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             PhotonNetwork.Destroy(gameObject);
         }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        rb.isKinematic = true;
     }
 }

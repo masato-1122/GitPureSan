@@ -49,7 +49,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
         base.Update();
         if (teleportPoint != null)
         {
-            offset = teleportPoint.transform.position + new Vector3(0f, 5f, 0f);
+            offset = teleportPoint.transform.position + new Vector3(0f, 1f, 0f);
         }
         else
         {
