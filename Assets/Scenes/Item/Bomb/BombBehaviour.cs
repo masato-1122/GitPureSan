@@ -13,6 +13,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     private Rigidbody rb;
 
     private Vector3 force;
+    private Vector3 offset;
     public float initialVelocity = 25.0f;
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
         heldAngle = new Vector3(0.0f, 0.0f, 0.0f);
+        offset = new Vector3(0f, 5f, 0f);
     }
 
     // Update is called once per frame
@@ -45,13 +47,13 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     // （必須）アイテムの機能を対象物に使う
     public void ActionForTargetedObject(GameObject target)
     {
-
+        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position, gameObject.transform.rotation);
     }
 
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
-        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position + offset, gameObject.transform.rotation);
         //GameObject bullet = PhotonNetwork.Instantiate("Bullet", muzzle.transform.position, muzzle.transform.rotation) as GameObject;
         bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
         //Destroy(gameObject);

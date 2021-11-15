@@ -5,18 +5,24 @@ using UnityEngine.EventSystems;
 
 public class BulletBehaviour : MonoBehaviour
 {
+    private float timer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-  
+        timer += Time.deltaTime;
+        if (timer > 3.0)
+        {
+            Destroy(gameObject);
+        }
     }
 
+    /*
     void OnCollisionEnter( Collision collisionInfo )
     {
         if(collisionInfo.gameObject.tag=="WALL")
@@ -38,4 +44,5 @@ public class BulletBehaviour : MonoBehaviour
             return;
         }
     }
+    */
 }
