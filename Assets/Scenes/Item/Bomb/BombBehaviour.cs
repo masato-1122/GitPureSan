@@ -9,6 +9,8 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject bombPrefab;
     protected int hp = 5;
     private PhotonView photonView;
+    public GameObject muzzle;
+    private int launch;
 
     private Rigidbody rb;
 
@@ -30,6 +32,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
+        launch = 10;
         heldAngle = new Vector3(0.0f, 0.0f, 0.0f);
         offset = new Vector3(0f, 5f, 0f);
     }
@@ -47,17 +50,18 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     // （必須）アイテムの機能を対象物に使う
     public void ActionForTargetedObject(GameObject target)
     {
-        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        Action(target);
     }
 
     // （必須）アイテムの機能を使う(爆弾を飛ばす)
     public void Action(GameObject targetPoint)
     {
-        GameObject bullet = Instantiate(bombPrefab, gameObject.transform.position + offset, gameObject.transform.rotation);
-        //GameObject bullet = PhotonNetwork.Instantiate("Bullet", muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
-        //Destroy(gameObject);
-        //PhotonNetwork.Destroy(gameObject);
+        if (launch > 0)
+        {
+            GameObject bullet = PhotonNetwork.Instantiate(bombPrefab.name, muzzle.transform.position, muzzle.transform.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = -transform.up* initialVelocity;
+            launch--;
+        }
     }
 
     public void Damaged(GameObject attacker)
@@ -67,5 +71,10 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             PhotonNetwork.Destroy(gameObject);
         }
+    }
+
+    public void addLaunch( int n)
+    {
+        launch += n;
     }
 }

@@ -10,6 +10,7 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject bulletPrefab = null;
     public float initialVelocity = 50.0f;
     private PhotonView photonView;
+    private int launch;
     // Start is called before the first frame update
     protected void Start()
     {
@@ -22,7 +23,8 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
-        heldAngle = new Vector3(90.0f, 0.0f, 0.0f); 
+        heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
+        launch = 10;
     }
 
     // Update is called once per frame
@@ -35,9 +37,18 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
 
     public void Action( GameObject targetPoint )
     {
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-        //GameObject bullet = PhotonNetwork.Instantiate("Bullet", muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
+        if (launch > 0)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+            //GameObject bullet = PhotonNetwork.Instantiate("Bullet", muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+            bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
+            launch--;
+        }
+    }
+
+    public void addLaunch(int n)
+    {
+        launch += n;
     }
 
     public void ActionForTargetedObject( GameObject target )

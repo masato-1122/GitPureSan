@@ -9,15 +9,18 @@ public class ShootBombBehaviour : MonoBehaviour
 {
     public GameObject particle;
     private float timer;
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         timer = 0;
-        Vector3 forceDirection = new Vector3(1.0f, 1.0f, 0f);
+        rb = gameObject.GetComponent<Rigidbody>();
+        /*
+        Vector3 forceDirection = new Vector3(0f, 0f, 0f);
         float forceMagnitude = 10.0f;
         Vector3 force = forceMagnitude * forceDirection;
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.AddForce(force, ForceMode.Impulse);
+        */
     }
 
     // Update is called once per frame
@@ -47,5 +50,6 @@ public class ShootBombBehaviour : MonoBehaviour
             Vector3 offset = gameObject.transform.position;
             GameObject ptl = PhotonNetwork.Instantiate(particle.name, offset, Quaternion.identity);
         }
+        rb.isKinematic = true;
     }
 }
