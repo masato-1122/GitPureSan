@@ -22,15 +22,21 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
-    /*
-    void OnCollisionEnter( Collision collisionInfo )
+    
+    void OnCollisionEnter( Collision col )
     {
-        if(collisionInfo.gameObject.tag=="WALL")
+        GameObject obj = col.gameObject;
+        if( obj.tag == "Player")
+        {
+            obj.GetComponent<PlayerBehaviour>().Damage(10);
+        }
+        /*
+        if(obj.tag=="WALL")
         {
             Destroy(gameObject);
             return;
         }
-        if(collisionInfo.gameObject.tag=="ENEMY")
+        if(obj.tag=="ENEMY")
         {
             GameObject zombie = collisionInfo.gameObject;
             ExecuteEvents.Execute<ReceiveMessage>(
@@ -38,11 +44,12 @@ public class BulletBehaviour : MonoBehaviour
                 eventData: null,
                 functor: (receiver, eventData) => receiver.setDead());
         }
-        if(collisionInfo.gameObject.tag == "OBJECT")
+        if(obj.tag == "OBJECT")
         {
             Destroy(gameObject);
             return;
         }
+        */
     }
-    */
+    
 }

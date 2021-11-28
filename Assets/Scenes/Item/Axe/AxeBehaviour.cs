@@ -160,6 +160,10 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
             state = STATE_BREAK;
             transform.Rotate(new Vector3(90.0f, 0.0f, 0.0f));
         }
+        if( target.tag == "Player")
+        {
+            Debug.Log("プレイヤーにあてた");
+        }
     }
 
     //

@@ -10,17 +10,12 @@ public class ShootBombBehaviour : MonoBehaviour
     public GameObject particle;
     private float timer;
     private Rigidbody rb;
+    private GameObject follower = null;
     // Start is called before the first frame update
     void Start()
     {
         timer = 0;
         rb = gameObject.GetComponent<Rigidbody>();
-        /*
-        Vector3 forceDirection = new Vector3(0f, 0f, 0f);
-        float forceMagnitude = 10.0f;
-        Vector3 force = forceMagnitude * forceDirection;
-        rb.AddForce(force, ForceMode.Impulse);
-        */
     }
 
     // Update is called once per frame
@@ -29,27 +24,35 @@ public class ShootBombBehaviour : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > 3.0)
         {
+            Damage(follower);
             Destroy(gameObject);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "ENEMY")
+        rb.isKinematic = true;
+        if( collision.gameObject.tag == "OBJECT" || collision.gameObject.tag == "Player")
         {
-            GameObject zombie = collision.gameObject;
-            ExecuteEvents.Execute<ReceiveMessage>(
-                target: zombie,
-                eventData: null,
-                functor: (receiver, eventData) => receiver.setDead());
+            follower = collision.gameObject;
         }
+    }
 
+    void Damage( GameObject g)
+    {
+        if( g.tag =="Player")
+        {
+            g.GetComponent<PlayerBehaviour>().Damage(20);
+        }
+        else
+        {
+            Destroy(g);
+        }
 
         if (particle != null)
         {
             Vector3 offset = gameObject.transform.position;
             GameObject ptl = PhotonNetwork.Instantiate(particle.name, offset, Quaternion.identity);
         }
-        rb.isKinematic = true;
     }
 }

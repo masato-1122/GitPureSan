@@ -7,10 +7,10 @@ using Photon.Pun;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public const int STATE_NORMAL = 0;
-    public const int STATE_PUNCH = 1;
-
     protected int state;
+
+    public const int STATE_NORMAL = 0;
+    public const int STATE_OVER= 1;
 
     public Camera camera;
     public GameObject dbboard = null;  // デバッグ表示
@@ -92,6 +92,21 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
         */
+
+        switch( state)
+        {
+            case STATE_NORMAL:
+                stateNormal();
+                break;
+            case STATE_OVER:
+                stateOver();
+                break;
+        }
+
+        if( hp <= 0)
+        {
+            state = STATE_OVER;
+        }
 
         // アクションターゲットへのレイキャスト処理
         Text uitext = indicator.GetComponent<Text>();
@@ -217,6 +232,16 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    private void stateOver()
+    {
+
+    }
+
+    public void stateNormal()
+    {
+
+    }
+
     private void clearIndicator()
     {
         Text uitext = indicator.GetComponent<Text>();
@@ -229,27 +254,13 @@ public class PlayerBehaviour : MonoBehaviour
         nameText.text = n;
     }
 
-    /*
-    //プレイヤーの体の色を変化
-    [PunRPC]
-    public void setBodyColor()
+    public void Damage(int d)
     {
-        Color playerBodyColor = 
-        GameObject clone = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().clone;
-        foreach( Transform childTransform in clone.transform)
-        {
-            foreach( Transform grandChildTransform in childTransform)
-            {
-                if( grandChildTransform.gameObject.name == "Head")
-                {
-                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = bodyColor;
-                }
-            }
-        }
+        hp -= d;
+        Debug.Log("プレイヤーの現在体力：" + hp);
     }
-    */
 
-    //プレイヤーの服の色が変化
+    //入室時の服の色を設定
     [PunRPC]
     public void setClothColor()
     {

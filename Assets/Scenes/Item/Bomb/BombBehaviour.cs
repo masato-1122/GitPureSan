@@ -62,6 +62,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
             bullet.GetComponent<Rigidbody>().velocity = -transform.up* initialVelocity;
             launch--;
         }
+
     }
 
     public void Damaged(GameObject attacker)
