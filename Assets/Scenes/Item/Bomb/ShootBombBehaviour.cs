@@ -25,29 +25,28 @@ public class ShootBombBehaviour : MonoBehaviour
         if (timer > 3.0)
         {
             Damage(follower);
-            Destroy(gameObject);
+            Destroy(follower);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision c)
     {
         rb.isKinematic = true;
-        if( collision.gameObject.tag == "OBJECT" || collision.gameObject.tag == "Player")
+        if( c.gameObject.tag == "OBJECT")
         {
-            follower = collision.gameObject;
+            follower = c.gameObject;
         }
     }
 
     void Damage( GameObject g)
     {
+        /*
         if( g.tag =="Player")
         {
             g.GetComponent<PlayerBehaviour>().Damage(20);
         }
-        else
-        {
-            Destroy(g);
-        }
+        */
 
         if (particle != null)
         {

@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 
-public class LoadBagBehaviour : MonoBehaviour
+public class itemReload : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -16,13 +14,5 @@ public class LoadBagBehaviour : MonoBehaviour
     void Update()
     {
         
-    }
-
-    void OnCollisionEnter(Collider c)
-    {
-        if (c.gameObject.CompareTag("Player"))
-        {
-            
-        }
     }
 }

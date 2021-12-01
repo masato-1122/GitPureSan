@@ -11,6 +11,7 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public float initialVelocity = 50.0f;
     private PhotonView photonView;
     private int launch;
+
     // Start is called before the first frame update
     protected void Start()
     {

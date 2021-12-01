@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class BulletBehaviour : MonoBehaviour
 {
     private float timer;
+    private GameObject targetObject = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,20 @@ public class BulletBehaviour : MonoBehaviour
         {
             obj.GetComponent<PlayerBehaviour>().Damage(10);
         }
+
+        ExecuteEvents.Execute<ItemReceiveMessage>(
+                target: targetObject,
+                eventData: null,
+                functor: (receiver, eventData) => receiver.Damaged(gameObject)
+                );
+        /*
+        ExecuteEvents.Execute<PlayerBehaviour>(
+                target: targetObject,
+                eventData: null,
+                functor: (receiver, eventData) => receiver.Damage(10)
+                );
+        */
+
         /*
         if(obj.tag=="WALL")
         {
