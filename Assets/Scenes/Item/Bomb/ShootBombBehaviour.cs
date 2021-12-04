@@ -25,8 +25,6 @@ public class ShootBombBehaviour : MonoBehaviour
         if (timer > 3.0)
         {
             Damage(follower);
-            Destroy(follower);
-            PhotonNetwork.Destroy(gameObject);
         }
     }
 
@@ -39,19 +37,21 @@ public class ShootBombBehaviour : MonoBehaviour
         }
     }
 
-    void Damage( GameObject g)
+    void Damage( GameObject targetObject)
     {
-        /*
-        if( g.tag =="Player")
-        {
-            g.GetComponent<PlayerBehaviour>().Damage(20);
-        }
-        */
+
+
+        ExecuteEvents.Execute<ItemReceiveMessage>(
+                target: targetObject,
+                eventData: null,
+                functor: (receiver, eventData) => receiver.Damaged(gameObject)
+                );
 
         if (particle != null)
         {
             Vector3 offset = gameObject.transform.position;
             GameObject ptl = PhotonNetwork.Instantiate(particle.name, offset, Quaternion.identity);
         }
+        PhotonNetwork.Destroy(gameObject);
     }
 }

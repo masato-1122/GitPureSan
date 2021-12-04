@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -1225282062510388832}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: OBJECT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -1225282062510388832}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

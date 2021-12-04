@@ -11,6 +11,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     public float effectLifeTime = 2;            // エフェクトの持続時間
     protected float now;
     private PhotonView photon = null;
+    protected int hp = 5;
 
     [SerializeField]private string objName;
     private Vector3 offset;
@@ -101,7 +102,11 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     // （必須）ダメージを受ける
     public void Damaged(GameObject attacker)
     {
-        // ダメージは受けない
+        hp -= 5;
+        if (hp <= 0)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
 }

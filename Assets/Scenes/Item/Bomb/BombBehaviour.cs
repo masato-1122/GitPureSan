@@ -11,6 +11,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
     private PhotonView photonView;
     public GameObject muzzle;
     private int launch;
+    private int maxLaunch = 10;
 
     private Rigidbody rb;
 
@@ -32,7 +33,7 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
-        launch = 10;
+        launch = maxLaunch;
         heldAngle = new Vector3(0.0f, 0.0f, 0.0f);
         offset = new Vector3(0f, 5f, 0f);
     }
@@ -67,15 +68,15 @@ public class BombBehaviour : ItemBehaviour, ItemReceiveMessage
 
     public void Damaged(GameObject attacker)
     {
-        hp -= 1;
+        hp -= 5;
         if (hp <= 0)
         {
             PhotonNetwork.Destroy(gameObject);
         }
     }
 
-    public void addLaunch( int n)
+    public void addLaunch()
     {
-        launch += n;
+        launch = maxLaunch;
     }
 }

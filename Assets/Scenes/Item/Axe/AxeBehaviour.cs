@@ -10,6 +10,7 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
     public const int STATE_ATTACK = 1;
     public const int STATE_BREAK = 2;
 
+    protected int hp = 5;
     protected float now;
     protected GameObject targetObject;
 
@@ -169,6 +170,10 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
     //
     public void Damaged(GameObject attacker)
     {
-        // Nothing
+        hp -= 5;
+        if (hp <= 0)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 }

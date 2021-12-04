@@ -105,6 +105,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if( hp <= 0)
         {
+            hp = 0;
             state = STATE_OVER;
         }
 
@@ -232,6 +233,12 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    public void Damaged(GameObject attacker)
+    {
+        hp -= 5;
+        Debug.Log("プレイヤーの現在体力：" + hp);
+    }
+
     private void stateOver()
     {
 
@@ -254,11 +261,6 @@ public class PlayerBehaviour : MonoBehaviour
         nameText.text = n;
     }
 
-    public void Damage(int d)
-    {
-        hp -= d;
-        Debug.Log("プレイヤーの現在体力：" + hp);
-    }
 
     //入室時の服の色を設定
     [PunRPC]

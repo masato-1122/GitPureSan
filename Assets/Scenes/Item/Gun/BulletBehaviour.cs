@@ -26,11 +26,13 @@ public class BulletBehaviour : MonoBehaviour
     
     void OnCollisionEnter( Collision col )
     {
+        /*
         GameObject obj = col.gameObject;
         if( obj.tag == "Player")
         {
             obj.GetComponent<PlayerBehaviour>().Damage(10);
         }
+        */
 
         ExecuteEvents.Execute<ItemReceiveMessage>(
                 target: targetObject,
