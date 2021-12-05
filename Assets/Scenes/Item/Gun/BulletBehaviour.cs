@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class BulletBehaviour : MonoBehaviour
 {
@@ -19,15 +21,17 @@ public class BulletBehaviour : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > 3.0)
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
     
     void OnCollisionEnter( Collision col )
     {
-        /*
+        
         GameObject obj = col.gameObject;
+
+        /*
         if( obj.tag == "Player")
         {
             obj.GetComponent<PlayerBehaviour>().Damage(10);
@@ -35,7 +39,7 @@ public class BulletBehaviour : MonoBehaviour
         */
 
         ExecuteEvents.Execute<ItemReceiveMessage>(
-                target: targetObject,
+                target: col.gameObject,
                 eventData: null,
                 functor: (receiver, eventData) => receiver.Damaged(gameObject)
                 );
@@ -47,12 +51,14 @@ public class BulletBehaviour : MonoBehaviour
                 );
         */
 
-        /*
+        
         if(obj.tag=="WALL")
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
             return;
         }
+
+        /*
         if(obj.tag=="ENEMY")
         {
             GameObject zombie = collisionInfo.gameObject;

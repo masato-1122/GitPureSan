@@ -247,7 +247,7 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
         palm.transform.localEulerAngles = heldAngle;
     }
 
-
+    /*
     // ---- for Debug
     public string GetSlotList()
     {
@@ -258,4 +258,5 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
         }
         return result;
     }
+    */
 }

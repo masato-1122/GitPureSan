@@ -104,6 +104,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4201681556816118858, guid: b27c9c768719a1946bcbebe316262504,
     type: 3}
   initialVelocity: 50
+  maxTimer: 0.5
 --- !u!137 &1586815517553321635
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

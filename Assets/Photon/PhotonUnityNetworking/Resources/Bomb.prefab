@@ -115,6 +115,7 @@ MonoBehaviour:
     type: 3}
   muzzle: {fileID: 5127569981288247918}
   initialVelocity: 25
+  maxTimer: 1
 --- !u!114 &5118232752708869412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 1
 --- !u!1 &5127569981288247918
 GameObject:
