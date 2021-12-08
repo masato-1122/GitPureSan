@@ -8,24 +8,14 @@ using Photon.Realtime;
 public class AppearAxe : MonoBehaviour
 {
     private bool push = false;
-    public int limit = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private int limit = 6;
+    private float posX = 40;
 
     void OnTriggerEnter( Collider c )
     {
-        if( c.gameObject.CompareTag("Player") || push == false || limit > 0)
+        if( (c.gameObject.CompareTag("Player") && push == false) && limit >= 0)
         {
-            float posX = Random.Range(40, 50);
+            posX++;
             GameObject item = PhotonNetwork.Instantiate("Axe", new Vector3(posX, 0.5f, -87f), Quaternion.identity);
             item.GetComponent<ItemBehaviour>().SetAbandoned();
             limit--;

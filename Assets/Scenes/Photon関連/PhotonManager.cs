@@ -52,6 +52,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         photonView = clone.GetComponent<PhotonView>();
         photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
 
+
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;

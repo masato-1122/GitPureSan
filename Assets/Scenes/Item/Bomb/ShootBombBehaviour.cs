@@ -39,8 +39,6 @@ public class ShootBombBehaviour : MonoBehaviour
 
     void Damage( GameObject targetObject)
     {
-
-
         ExecuteEvents.Execute<ItemReceiveMessage>(
                 target: targetObject,
                 eventData: null,

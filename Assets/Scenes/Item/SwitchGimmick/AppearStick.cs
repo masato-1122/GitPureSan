@@ -7,22 +7,18 @@ using Photon.Realtime;
 
 public class AppearStick : MonoBehaviour
 {
-    public GameObject item;
     private bool push = false;
-    public int limit = 10;
+    private int limit = 6;
+    private float posX = 40;
 
-    void Start()
-    {
-
-    }
 
     void OnTriggerEnter(Collider c)
     {
-        if (c.gameObject.CompareTag("Player") || push == false || limit > 0)
+        if ((c.gameObject.CompareTag("Player") && push == false )&& limit >= 0)
         {
-            float posX = Random.Range(40, 50);
+            posX++;
             //item = Instantiate( item, new Vector3( posX, 3f, -85f), Quaternion.identity);
-            item = PhotonNetwork.Instantiate("TelaportStick", new Vector3(posX, 1f, -90f), Quaternion.identity);
+            GameObject item = PhotonNetwork.Instantiate("TelaportStick", new Vector3(posX, 1f, -90f), Quaternion.identity);
             item.GetComponent<ItemBehaviour>().SetAbandoned();
             limit--;
             push = true;
