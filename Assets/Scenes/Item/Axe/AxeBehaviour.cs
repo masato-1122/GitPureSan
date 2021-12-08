@@ -85,7 +85,6 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         {
             stream.SendNext(this.rigidbody.position);
             stream.SendNext(this.rigidbody.rotation);
-            Debug.Log("Streaming");
         }
         else
         {

@@ -49,14 +49,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
-        photonView = clone.GetComponent<PhotonView>();
-        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
-
 
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().setName(PhotonNetwork.NickName);
+
+        photonView = clone.GetComponent<PhotonView>();
+        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
 
         ///プレイヤーの名前表示テキスト出現
         ///どちらが良いか検証中

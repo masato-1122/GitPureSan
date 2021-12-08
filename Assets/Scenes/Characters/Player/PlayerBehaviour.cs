@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject canvas;
     public Text nameText;
 
+    private Rigidbody rigidbody;
+    private Vector3 networkPosition;
+    private Quaternion networkRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
         hp = maxHp;
         state = STATE_NORMAL;
 
+        rigidbody = GetComponent<Rigidbody>(); ;
         rightHand = GameObject.Find("RightHand");
         leftHand = GameObject.Find("LeftHand");
 
@@ -62,6 +68,37 @@ public class PlayerBehaviour : MonoBehaviour
         this.tpCamera.depth = 0;
 
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+    }
+
+    public void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        else
+        {
+            this.rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
+            this.rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(this.rigidbody.position);
+            stream.SendNext(this.rigidbody.rotation);
+        }
+        else
+        {
+            this.rigidbody.position = (Vector3)stream.ReceiveNext();
+            this.rigidbody.rotation = (Quaternion)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
+            networkPosition += (this.rigidbody.velocity * lag);
+        }
     }
 
     // Update is called once per frame
@@ -257,7 +294,7 @@ public class PlayerBehaviour : MonoBehaviour
         uitext.text = "";
     }
 
-    [PunRPC]
+        [PunRPC]
     public void setName(string n)
     {
         nameText.text = n;
