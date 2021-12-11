@@ -91,12 +91,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
         private PhotonView photonView;
         private bool flag = true;
-
+        /*
         public void setFlag(bool f)
         {
             flag = f;
         }
-
+        */
         public Vector3 Velocity
         {
             get { return m_RigidBody.velocity; }
@@ -227,7 +227,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private Vector2 GetInput()
         {
-            
             Vector2 input = new Vector2
                 {
                     x = CrossPlatformInputManager.GetAxis("Horizontal"),

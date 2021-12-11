@@ -52,6 +52,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         //プレイヤー操作に関する２つのスクリプトをONにする
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
+        //clone.GetComponent<ControllerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().setName(PhotonNetwork.NickName);
 

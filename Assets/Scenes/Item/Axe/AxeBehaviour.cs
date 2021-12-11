@@ -64,7 +64,6 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         }
     }
 
-    
     public void FixedUpdate()
     {
         if (!photonView.IsMine)
