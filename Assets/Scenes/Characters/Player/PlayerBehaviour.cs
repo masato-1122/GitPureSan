@@ -53,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             return;
         }
+        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
         hp = maxHp;
         state = STATE_NORMAL;
 
@@ -68,19 +69,6 @@ public class PlayerBehaviour : MonoBehaviour
         this.tpCamera.depth = 0;
 
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
-    }
-
-    public void FixedUpdate()
-    {
-        if (!photonView.IsMine)
-        {
-            return;
-        }
-        else
-        {
-            this.rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
-            this.rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        }
     }
 
 
