@@ -51,5 +51,6 @@ public class ShootBombBehaviour : MonoBehaviour
             GameObject ptl = PhotonNetwork.Instantiate(particle.name, offset, Quaternion.identity);
         }
         PhotonNetwork.Destroy(gameObject);
+        return;
     }
 }

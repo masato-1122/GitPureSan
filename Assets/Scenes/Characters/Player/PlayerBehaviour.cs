@@ -38,12 +38,16 @@ public class PlayerBehaviour : MonoBehaviour
     private PhotonManager photonManager;
     public PhotonView photonView;
 
-    public GameObject canvas;
+    private GameObject canvas;
     public Text nameText;
 
     private Rigidbody rigidbody;
     private Vector3 networkPosition;
     private Quaternion networkRotation;
+
+    public GameObject rightArm;
+    public GameObject leftArm;
+    public GameObject body;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +57,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             return;
         }
-        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
         hp = maxHp;
         state = STATE_NORMAL;
 
@@ -68,27 +71,19 @@ public class PlayerBehaviour : MonoBehaviour
         this.mainCamera.depth = 0;
         this.tpCamera.depth = 0;
 
+        canvas = GameObject.Find("Canvas");
+        canvas.GetComponent<Canvas>().worldCamera = this.camera;
+
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+        SetColor(photonManager.getClothColor());
+
+        //名前テキストの表示
+        GameObject clone = PhotonNetwork.Instantiate(nameText.name, gameObject.transform.position, Quaternion.identity);
+        clone.transform.parent = canvas.transform;
+        Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
+        pointTemp.z = 0f;
+        clone.transform.position = pointTemp;
     }
-
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(this.rigidbody.position);
-            stream.SendNext(this.rigidbody.rotation);
-        }
-        else
-        {
-            this.rigidbody.position = (Vector3)stream.ReceiveNext();
-            this.rigidbody.rotation = (Quaternion)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
-            networkPosition += (this.rigidbody.velocity * lag);
-        }
-    }
-
 
 
     // Update is called once per frame
@@ -291,69 +286,11 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
 
-    //入室時の服の色を設定
-    [PunRPC]
-    public void setClothColor()
+    public void SetColor(Color c)
     {
-        if( !photonView.IsMine)
-        {
-            return;
-        }
-        Color playerColor = GameObject.Find("PhotonManager").GetComponent<PhotonManager>().getClothColor();
-        GameObject clone = this.gameObject;
-        foreach (Transform childTransform in clone.transform)
-        {
-            //Debug.Log("子オブジェクト:" + childTransform.gameObject.name); // 子オブジェクト名を出力
-            foreach (Transform grandChildTransform in childTransform)
-            {
-                // Debug.Log("孫オブジェクト:" + grandChildTransform.gameObject.name); // 孫オブジェクト名を出力
-                if (grandChildTransform.gameObject.name == "Body")
-                {
-                    grandChildTransform.gameObject.GetComponent<Renderer>().material.color = playerColor;
-                }
-
-                if (grandChildTransform.gameObject.name == "RightHand")
-                {
-                    foreach (Transform grandChild2Transform in grandChildTransform)
-                    {
-                        foreach (Transform grandChild3Transform in grandChild2Transform)
-                        {
-                            foreach (Transform grandChild4Transform in grandChild3Transform)
-                            {
-                                foreach (Transform grandChild5Transform in grandChild4Transform)
-                                {
-                                    if (grandChild5Transform.gameObject.name == "ID20")
-                                    {
-                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = playerColor;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (grandChildTransform.gameObject.name == "LeftHand")
-                {
-                    foreach (Transform grandChild2Transform in grandChildTransform)
-                    {
-                        foreach (Transform grandChild3Transform in grandChild2Transform)
-                        {
-                            foreach (Transform grandChild4Transform in grandChild3Transform)
-                            {
-                                foreach (Transform grandChild5Transform in grandChild4Transform)
-                                {
-                                    if (grandChild5Transform.gameObject.name == "ID20")
-                                    {
-                                        grandChild5Transform.gameObject.GetComponent<Renderer>().material.color = playerColor;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+        rightArm.GetComponent<Renderer>().material.color = c;
+        leftArm.GetComponent<Renderer>().material.color = c;
+        body.GetComponent<Renderer>().material.color = c;
     }
 
 }

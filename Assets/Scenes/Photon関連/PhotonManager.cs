@@ -55,9 +55,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //clone.GetComponent<ControllerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().setName(PhotonNetwork.NickName);
-
-        photonView = clone.GetComponent<PhotonView>();
-        photonView.RPC("setClothColor", RpcTarget.AllBufferedViaServer);
+   
 
         ///プレイヤーの名前表示テキスト出現
         ///どちらが良いか検証中

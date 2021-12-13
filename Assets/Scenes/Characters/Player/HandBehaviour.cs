@@ -151,6 +151,7 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
                 targetObject = target;
                 now = 0.0f;
                 transform.Translate(0.0f, 0.0f, 1.0f);
+
                 state = STATE_TAKEOBJECT;
             }
         }
