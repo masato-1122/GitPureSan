@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class HandBehaviour : MonoBehaviour, HandReceiveMessage
 {
     public const int STATE_NORMAL = 0;
@@ -88,19 +89,20 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
             slot[slotIndex] = targetObject;
             SetItemFromSlot();
             item.GetComponent<ItemBehaviour>().SetUsing();
+            item.GetComponent<PhotonView>().RequestOwnership();
+            //item.GetComponent<PhotonView>().TransferOwnership();
             targetObject = null;
             
             // 手を戻す
             transform.Translate(0.0f, 0.0f, -1.0f);
             state = STATE_NORMAL;
 
-            /*
+            
             for(int i=0;i<slot.Length;i++)
             {
                 Debug.Log(slot[i].name);
             }
             Debug.Log("hand:"+item.name);
-            */
         }
     }
 
@@ -248,7 +250,7 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
         palm.transform.localEulerAngles = heldAngle;
     }
 
-    /*
+    
     // ---- for Debug
     public string GetSlotList()
     {
@@ -259,5 +261,5 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
         }
         return result;
     }
-    */
+    
 }

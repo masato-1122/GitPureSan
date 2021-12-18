@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 4974233871139226623}
   - component: {fileID: 657427437873646258}
   - component: {fileID: 2581401607974176061}
+  - component: {fileID: 1589350486450165826}
   m_Layer: 0
   m_Name: Axe
   m_TagString: OBJECT
@@ -278,6 +279,18 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &1589350486450165826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152704175093739093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e76cd8c4246dd489c41869e2aedba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7560437432130725961
 GameObject:
   m_ObjectHideFlags: 0

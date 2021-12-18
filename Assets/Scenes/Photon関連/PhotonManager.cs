@@ -124,9 +124,4 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         clothColor = c;
     }
-
-    public void setBodyColor( Color c)
-    {
-        bodyColor = c;
-    }
 }

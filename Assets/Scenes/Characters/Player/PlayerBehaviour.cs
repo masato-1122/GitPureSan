@@ -162,11 +162,11 @@ public class PlayerBehaviour : MonoBehaviour
         int z = (int)sensorPoint.transform.position.z;
 
         Text dbb = dbboard.GetComponent<Text>();
-        /*
+        
         dbb.text = leftHand.GetComponent<HandBehaviour>().GetSlotList() + "\n" + rightHand.GetComponent<HandBehaviour>().GetSlotList()
             + "\n" + (target == null ? "None" : target.name)
             + "\n" + x + "," + y + "," + z; 
-        */
+        
 
         // Action-A
         // 左手(Action)

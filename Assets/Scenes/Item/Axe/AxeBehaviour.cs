@@ -63,37 +63,7 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
                 break;
         }
     }
-
-    public void FixedUpdate()
-    {
-        if (!photonView.IsMine)
-        {
-            return;
-        }
-        else
-        {
-            this.rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
-            this.rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        }
-    }
     
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(this.rigidbody.position);
-            stream.SendNext(this.rigidbody.rotation);
-        }
-        else
-        {
-            this.rigidbody.position = (Vector3)stream.ReceiveNext();
-            this.rigidbody.rotation = (Quaternion)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
-            networkPosition += (this.rigidbody.velocity * lag);
-        }
-    }
 
     void stateAttack()
     {
@@ -153,16 +123,7 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
 
     public void ActionForTargetedObject( GameObject target )
     {
-        targetObject = target;
-        if(state == STATE_NORMAL)
-        {
-            state = STATE_BREAK;
-            transform.Rotate(new Vector3(90.0f, 0.0f, 0.0f));
-        }
-        if( target.tag == "Player")
-        {
-            Debug.Log("プレイヤーにあてた");
-        }
+        Action(target);
     }
 
     //
