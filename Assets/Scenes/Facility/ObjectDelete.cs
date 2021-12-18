@@ -6,6 +6,8 @@ using Photon.Realtime;
 
 public class ObjectDelete : MonoBehaviour
 {
+    private GameObject rightHand;
+    private GameObject leftHand;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,29 @@ public class ObjectDelete : MonoBehaviour
 
     void itemDelete(GameObject player)
     {
+        rightHand = player.GetComponent<PlayerBehaviour>().GetRightArm();
+        leftHand = player.GetComponent<PlayerBehaviour>().GetLeftArm();
+        GameObject dropItem1 = leftHand.GetComponent<HandBehaviour>().DropItem();
+        if (dropItem1 != null)
+        {
+            dropItem1.transform.parent = null;
+            dropItem1.transform.position = player.transform.position;
+            dropItem1.transform.rotation = Quaternion.identity;
+            dropItem1.GetComponent<ItemBehaviour>().SetAbandoned();
+            PhotonNetwork.Destroy(dropItem1);
+        }
+
+        GameObject dropItem2 = rightHand.GetComponent<HandBehaviour>().DropItem();
+        if (dropItem2 != null)
+        {
+            dropItem2.transform.parent = null;
+            dropItem2.transform.position = player.transform.position;
+            dropItem2.transform.rotation = Quaternion.identity;
+            dropItem2.GetComponent<ItemBehaviour>().SetAbandoned();
+            PhotonNetwork.Destroy(dropItem2);
+        }
+
+        /*
         foreach (Transform child in player.transform)
         {
             foreach (Transform grandChildTransform in child)
@@ -68,5 +93,6 @@ public class ObjectDelete : MonoBehaviour
                 }
             }
         }
+        */
     }
 }

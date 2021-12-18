@@ -77,7 +77,7 @@ public class PlayerBehaviour : MonoBehaviour
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
         SetColor(photonManager.getClothColor());
 
-        //名前テキストの表示
+        //名前テキストの生成と表示
         GameObject clone = PhotonNetwork.Instantiate(nameText.name, gameObject.transform.position, Quaternion.identity);
         clone.transform.parent = canvas.transform;
         Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
@@ -161,12 +161,13 @@ public class PlayerBehaviour : MonoBehaviour
         int y = (int)sensorPoint.transform.position.y;
         int z = (int)sensorPoint.transform.position.z;
 
+        /*
         Text dbb = dbboard.GetComponent<Text>();
         
         dbb.text = leftHand.GetComponent<HandBehaviour>().GetSlotList() + "\n" + rightHand.GetComponent<HandBehaviour>().GetSlotList()
             + "\n" + (target == null ? "None" : target.name)
             + "\n" + x + "," + y + "," + z; 
-        
+        */
 
         // Action-A
         // 左手(Action)
@@ -291,6 +292,16 @@ public class PlayerBehaviour : MonoBehaviour
         rightArm.GetComponent<Renderer>().material.color = c;
         leftArm.GetComponent<Renderer>().material.color = c;
         body.GetComponent<Renderer>().material.color = c;
+    }
+
+    public GameObject GetRightArm()
+    {
+        return this.rightHand;
+    }
+
+    public GameObject GetLeftArm()
+    {
+        return this.leftHand;
     }
 
 }
