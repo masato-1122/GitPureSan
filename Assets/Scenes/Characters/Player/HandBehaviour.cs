@@ -90,7 +90,8 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
             SetItemFromSlot();
             item.GetComponent<ItemBehaviour>().SetUsing();
             item.GetComponent<PhotonView>().RequestOwnership();
-            //item.GetComponent<PhotonView>().TransferOwnership();
+
+            item.transform.parent = gameObject.transform;
             targetObject = null;
             
             // 手を戻す

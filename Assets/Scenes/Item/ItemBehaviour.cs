@@ -93,6 +93,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     // 状態：取得済み
     protected void stateOwned()
     {
+
     }
 
     // 状態：使用中

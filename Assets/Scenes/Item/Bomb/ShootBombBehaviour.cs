@@ -16,6 +16,7 @@ public class ShootBombBehaviour : MonoBehaviour
     {
         timer = 0;
         rb = gameObject.GetComponent<Rigidbody>();
+        //StartCoroutine("Damage", follower);
     }
 
     // Update is called once per frame
@@ -40,21 +41,13 @@ public class ShootBombBehaviour : MonoBehaviour
 
     void Damage( GameObject targetObject)
     {
-        /*
+        
         ExecuteEvents.Execute<ItemReceiveMessage>(
                 target: targetObject,
                 eventData: null,
                 functor: (receiver, eventData) => receiver.Damaged(gameObject)
                 );
-        */
-        if( targetObject.GetComponent<PhotonView>() != null)
-        {
-            gameObject.GetComponent<PhotonOwnershipView>().RequestView(targetObject);
-        }
-        else
-        {
-            return;
-        }
+        
 
         if (particle != null)
         {

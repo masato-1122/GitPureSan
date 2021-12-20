@@ -294,14 +294,13 @@ public class PlayerBehaviour : MonoBehaviour
         body.GetComponent<Renderer>().material.color = c;
     }
 
-    public GameObject GetRightArm()
+    public GameObject GetRightHandItem()
     {
         return this.rightHand;
     }
 
-    public GameObject GetLeftArm()
+    public GameObject GetLeftHandItem()
     {
         return this.leftHand;
     }
-
 }

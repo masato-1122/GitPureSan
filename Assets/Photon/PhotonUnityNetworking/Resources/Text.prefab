@@ -80,7 +80,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 12
+  m_Text: 22
 --- !u!114 &6911944138829232596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 6911944138829232599}
+  Camera: []
 --- !u!114 &6911944138829232597
 MonoBehaviour:
   m_ObjectHideFlags: 0

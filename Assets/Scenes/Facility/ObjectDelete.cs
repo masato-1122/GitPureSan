@@ -30,6 +30,8 @@ public class ObjectDelete : MonoBehaviour
         }
         if (item.CompareTag("Player"))
         {
+            rightHand = item.GetComponent<PlayerBehaviour>().GetRightHandItem();
+            leftHand = item.GetComponent<PlayerBehaviour>().GetLeftHandItem();
             itemDelete(item);
         }
     }
@@ -37,8 +39,6 @@ public class ObjectDelete : MonoBehaviour
 
     void itemDelete(GameObject player)
     {
-        rightHand = player.GetComponent<PlayerBehaviour>().GetRightArm();
-        leftHand = player.GetComponent<PlayerBehaviour>().GetLeftArm();
         GameObject dropItem1 = leftHand.GetComponent<HandBehaviour>().DropItem();
         if (dropItem1 != null)
         {
@@ -46,6 +46,7 @@ public class ObjectDelete : MonoBehaviour
             dropItem1.transform.position = player.transform.position;
             dropItem1.transform.rotation = Quaternion.identity;
             dropItem1.GetComponent<ItemBehaviour>().SetAbandoned();
+            dropItem1.GetComponent<PhotonView>().RequestOwnership();
             PhotonNetwork.Destroy(dropItem1);
         }
 
@@ -56,6 +57,7 @@ public class ObjectDelete : MonoBehaviour
             dropItem2.transform.position = player.transform.position;
             dropItem2.transform.rotation = Quaternion.identity;
             dropItem2.GetComponent<ItemBehaviour>().SetAbandoned();
+            dropItem2.GetComponent<PhotonView>().RequestOwnership();
             PhotonNetwork.Destroy(dropItem2);
         }
 
