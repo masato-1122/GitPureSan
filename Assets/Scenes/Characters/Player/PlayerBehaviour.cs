@@ -281,7 +281,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
         [PunRPC]
-    public void setName(string n)
+    public void SetName(string n)
     {
         nameText.text = n;
     }

@@ -54,13 +54,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         //clone.GetComponent<ControllerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
-        clone.GetComponent<PlayerBehaviour>().setName(PhotonNetwork.NickName);
-   
+        clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
 
-        ///プレイヤーの名前表示テキスト出現
-        ///どちらが良いか検証中
-        ///1.名前テキストを単独で出現させ、プレイヤーの頭上に追従させる
-        ///2.プレイヤーに事前に名前テキストを付け、プレイヤーと同時に出現させる
+        //プレイヤーリスト更新
+        Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
+        if (playerList != null)
+        {
+            playerList.text = "";
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                playerList.text += player.NickName + ("\n");
+                //Debug.Log(player.NickName);
+            }
+        }
 
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
@@ -98,6 +104,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         SceneManager.sceneLoaded += this.JoinRoomLoaded;
         SceneManager.LoadScene("Game");
+        
     }
 
 
