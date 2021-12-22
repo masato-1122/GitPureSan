@@ -31,13 +31,5 @@ public class ColorChange : MonoBehaviour
         objColor = new Color(red, green, blue, 1);
     }
 
-    public Color getColor()
-    {
-        return objColor;
-    }
 
-    public void enterColor()
-    {
-        this.photonManager.setColor(getColor());
-    }
 }

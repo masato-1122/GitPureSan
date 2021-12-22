@@ -32,7 +32,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(this.gameObject);
         PhotonNetwork.ConnectUsingSettings();
     }
+
     
+
     void OnGUI()
     {
         //(new Rect(左上のｘ座標, 左上のｙ座標, 横幅, 縦幅), "テキスト", スタイル（今は省略）)
@@ -55,19 +57,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //clone.GetComponent<ControllerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
-
-        //プレイヤーリスト更新
-        Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
-        if (playerList != null)
-        {
-            playerList.text = "";
-            foreach (var player in PhotonNetwork.PlayerList)
-            {
-                playerList.text += player.NickName + ("\n");
-                //Debug.Log(player.NickName);
-            }
-        }
-
+        clone.GetComponent<PhotonView>().RPC("ListUpdate", RpcTarget.AllBuffered);
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
 

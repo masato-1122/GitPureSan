@@ -49,6 +49,8 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject leftArm;
     public GameObject body;
 
+    private Color clothColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
         SetColor(photonManager.getClothColor());
+        clothColor = photonManager.getClothColor();
 
         //名前テキストの生成と表示
         GameObject clone = PhotonNetwork.Instantiate(nameText.name, gameObject.transform.position, Quaternion.identity);
@@ -286,12 +289,31 @@ public class PlayerBehaviour : MonoBehaviour
         nameText.text = n;
     }
 
+    [PunRPC]
+    private void ListUpdate()
+    {
+        //プレイヤーリスト更新
+        Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
+        if (playerList != null)
+        {
+            playerList.text = "";
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                playerList.text += player.NickName + ("\n");
+            }
+        }
+    }
 
     public void SetColor(Color c)
     {
         rightArm.GetComponent<Renderer>().material.color = c;
         leftArm.GetComponent<Renderer>().material.color = c;
         body.GetComponent<Renderer>().material.color = c;
+    }
+
+    public Color GetClothColor()
+    {
+        return clothColor;
     }
 
     public GameObject GetRightHandItem()
