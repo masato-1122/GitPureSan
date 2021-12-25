@@ -39,6 +39,7 @@ public class PlayerBehaviour : MonoBehaviour
     public PhotonView photonView;
 
     private GameObject canvas;
+    private string name;
     public Text nameText;
 
     private Rigidbody rigidbody;
@@ -284,23 +285,47 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
         [PunRPC]
+
     public void SetName(string n)
     {
         nameText.text = n;
+        name = n;
     }
 
+    public string GetName()
+    {
+        return name;
+    }
+
+    //Managerクラスでプレイヤーの入室時に実行
     [PunRPC]
     private void ListUpdate()
     {
         //プレイヤーリスト更新
         Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if (playerList != null)
         {
             playerList.text = "";
-            foreach (var player in PhotonNetwork.PlayerList)
+            Player[] player = PhotonNetwork.PlayerList;
+            
+            for( int i = 0; i < player.Length; i++)
             {
+                Text pt = GetComponent<Text>();
+                Debug.Log(player[i].NickName);
+                //pt.text = player[i].NickName;
+                //pt.text = players[i].GetComponent<PlayerBehaviour>().GetName();
+                playerList.color = players[i].GetComponent<PlayerBehaviour>().GetClothColor();
+                playerList.text += "<color=#ff0000>"+ player[i].NickName + "</color>" + ("\n");
+            }
+            /*
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                
+                //pt.color = player.GetComponent<PlayerBehaviour>().GetClothColor();
                 playerList.text += player.NickName + ("\n");
             }
+            */
         }
     }
 
