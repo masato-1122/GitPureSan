@@ -77,10 +77,6 @@ public class PlayerBehaviour : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         canvas.GetComponent<Canvas>().worldCamera = this.camera;
 
-        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
-        SetColor(photonManager.getClothColor());
-        clothColor = photonManager.getClothColor();
-
         //名前テキストの生成と表示
         GameObject clone = PhotonNetwork.Instantiate(nameText.name, gameObject.transform.position, Quaternion.identity);
         clone.transform.parent = canvas.transform;
@@ -285,7 +281,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
         [PunRPC]
-
     public void SetName(string n)
     {
         nameText.text = n;
@@ -297,10 +292,16 @@ public class PlayerBehaviour : MonoBehaviour
         return name;
     }
 
-    //Managerクラスでプレイヤーの入室時に実行
+    
+    //Managerクラスでプレイヤーの入室時にプレイヤー一覧更新
     [PunRPC]
-    private void ListUpdate()
+    private void UpdateMemberList()
     {
+        
+        GameObject list = GameObject.FindGameObjectWithTag("List");
+        list.GetComponent<AllPlayerList>().UpdateList();
+        
+        /*
         //プレイヤーリスト更新
         Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -309,31 +310,38 @@ public class PlayerBehaviour : MonoBehaviour
             playerList.text = "";
             Player[] player = PhotonNetwork.PlayerList;
             
-            for( int i = 0; i < player.Length; i++)
+            for( int i = 0; i < players.Length; i++)
             {
-                Text pt = GetComponent<Text>();
-                Debug.Log(player[i].NickName);
-                //pt.text = player[i].NickName;
-                //pt.text = players[i].GetComponent<PlayerBehaviour>().GetName();
-                playerList.color = players[i].GetComponent<PlayerBehaviour>().GetClothColor();
-                playerList.text += "<color=#ff0000>"+ player[i].NickName + "</color>" + ("\n");
-            }
-            /*
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
+                Color c = players[i].GetComponent<PlayerBehaviour>().GetClothColor();
+                string n = player[i].NickName;
                 
-                //pt.color = player.GetComponent<PlayerBehaviour>().GetClothColor();
-                playerList.text += player.NickName + ("\n");
+                Debug.Log(player[i].TagObject);
+                playerList.text += RGBConvertHex(c , n);
             }
-            */
         }
+        */
     }
+    
+    private string RGBConvertHex(Color c, string t)
+    {
+        int r = (int)c.r;
+        string sr = r.ToString("x2");
+
+        int g = (int)c.g;
+        string sg = g.ToString("x2");
+
+        int b = (int)c.b;
+        string sb = b.ToString("x2");
+        return "<color=" + sr + sg + sb + ">" + t + "</color>" + ("\n");
+    }
+    
 
     public void SetColor(Color c)
     {
         rightArm.GetComponent<Renderer>().material.color = c;
         leftArm.GetComponent<Renderer>().material.color = c;
         body.GetComponent<Renderer>().material.color = c;
+        clothColor = c;
     }
 
     public Color GetClothColor()

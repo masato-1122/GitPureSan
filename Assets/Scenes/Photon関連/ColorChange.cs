@@ -31,5 +31,8 @@ public class ColorChange : MonoBehaviour
         objColor = new Color(red, green, blue, 1);
     }
 
-
+    public void enterColor()
+    {
+        photonManager.SetColor(objColor);
+    }
 }

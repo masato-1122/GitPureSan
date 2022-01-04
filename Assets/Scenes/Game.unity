@@ -51770,6 +51770,7 @@ GameObject:
   - component: {fileID: 1512154355}
   - component: {fileID: 1512154357}
   - component: {fileID: 1512154356}
+  - component: {fileID: 1512154358}
   m_Layer: 5
   m_Name: PlayerList
   m_TagString: List
@@ -51838,6 +51839,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512154354}
   m_CullTransparentMesh: 1
+--- !u!114 &1512154358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512154354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a1648cf58f46c4b95628950f819fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listText: {fileID: 1512154356}
 --- !u!1 &1513197996
 GameObject:
   m_ObjectHideFlags: 0

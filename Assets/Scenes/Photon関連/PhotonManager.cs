@@ -27,6 +27,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private GameObject namePanel;
     public GameObject namePrefab;
 
+
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -49,16 +50,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
-
+        
         //プレイヤー操作スクリプト、
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
-        clone.GetComponent<PhotonView>().RPC("ListUpdate", RpcTarget.AllBuffered);
+        clone.GetComponent<PlayerBehaviour>().SetColor(getClothColor());
+        
+
+        clone.GetComponent<PhotonView>().RPC("UpdateMemberList", RpcTarget.AllBuffered);
+        /*
+        playerList.TagObject = clone;
+        Debug.Log(playerList.TagObject);
+        */
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
 
-
+    public void OnPhotonPlayerConnected(Player player)
+    {
+        Debug.Log(player.NickName + " is joined.");
+    }
 
     void LeaveRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
@@ -92,7 +103,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         SceneManager.sceneLoaded += this.JoinRoomLoaded;
         SceneManager.LoadScene("Game");
-        
     }
 
 
@@ -104,6 +114,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Login");
     }
 
+    public void SetColor(Color c)
+    {
+        clothColor = c;
+    }
 
     public Color getClothColor()
     {
