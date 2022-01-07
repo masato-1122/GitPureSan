@@ -45,6 +45,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         {
             if (targeted)
             {
+                Debug.Log(GetComponent<PhotonView>().OwnerActorNr);
                 //GetComponent<Renderer>().material.color = Color.yellow;
             }
             else
@@ -151,6 +152,11 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     public void Targeted()
     {
         targeted = true;
+    }
+
+    public void SetOwner(PhotonView view)
+    {
+        GetComponent<PhotonView>().TransferOwnership(view.OwnerActorNr);
     }
 
     public Vector3 GetHeldAngle()

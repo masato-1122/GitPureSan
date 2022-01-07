@@ -24,17 +24,17 @@ public class AllPlayerList : MonoBehaviour
     public void UpdateList()
     {
         GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
-
         Player[] player = PhotonNetwork.PlayerList;
         listText = gameObject.GetComponent<Text>();
         listText.text = "";
         for (int i = 0; i < pla.Length; i++)
         {
             Color c = pla[i].GetComponent<PlayerBehaviour>().GetClothColor();
-            //string n = pla[i].GetComponent<PlayerBehaviour>().GetName();
+            string pn = pla[i].GetComponent<PlayerBehaviour>().GetName();
             string n = player[i].NickName; 
             listText.text += RGBConvertHex(c, n);
             Debug.Log(n);
+            Debug.Log(pn);
         }
     }
 

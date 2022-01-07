@@ -148,6 +148,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (target.CompareTag("OBJECT"))
                 {
                     target.GetComponent<ItemBehaviour>().Targeted();
+                    target.GetComponent<ItemBehaviour>().SetOwner(GetComponent<PhotonView>());
                     uitext.text = String.Format(String.Format("{0}", target.name));
                 }
             }
