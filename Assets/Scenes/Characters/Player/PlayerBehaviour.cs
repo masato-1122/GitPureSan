@@ -263,6 +263,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         hp -= 5;
         Debug.Log("プレイヤーの現在体力：" + hp);
+        if( hp <= 0)
+        {
+            Debug.Log("体力が無くなりました");
+        }
     }
 
     private void stateOver()
@@ -300,40 +304,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         
         GameObject list = GameObject.FindGameObjectWithTag("List");
-        list.GetComponent<AllPlayerList>().UpdateList();
+        GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
+        list.GetComponent<AllPlayerList>().UpdateList(pla);
         
         /*
-        //プレイヤーリスト更新
-        Text playerList = GameObject.FindWithTag("List").GetComponent<Text>();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if (playerList != null)
-        {
-            playerList.text = "";
-            Player[] player = PhotonNetwork.PlayerList;
-            
-            for( int i = 0; i < players.Length; i++)
-            {
-                Color c = players[i].GetComponent<PlayerBehaviour>().GetClothColor();
-                string n = player[i].NickName;
-                
-                Debug.Log(player[i].TagObject);
-                playerList.text += RGBConvertHex(c , n);
-            }
-        }
+        GameObject list = GameObject.FindGameObjectWithTag("List");
+        list.GetComponent<AllPlayerList>().CreateList(PhotonNetwork.PlayerList.Length);
         */
-    }
-    
-    private string RGBConvertHex(Color c, string t)
-    {
-        int r = (int)c.r;
-        string sr = r.ToString("x2");
-
-        int g = (int)c.g;
-        string sg = g.ToString("x2");
-
-        int b = (int)c.b;
-        string sb = b.ToString("x2");
-        return "<color=" + sr + sg + sb + ">" + t + "</color>" + ("\n");
     }
     
 

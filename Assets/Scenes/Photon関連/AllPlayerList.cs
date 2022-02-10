@@ -2,39 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class AllPlayerList : MonoBehaviour
 {
     public Text listText;
+
+    private string listMessage;
     // Start is called before the first frame update
     void Start()
     {
         
-    }
 
+    }
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    [PunRPC]
-    public void UpdateList()
+
+    private void OnGUI()
     {
-        GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
+        
+    }
+
+    public void UpdateList(GameObject[] ps)
+    {
         Player[] player = PhotonNetwork.PlayerList;
         listText = gameObject.GetComponent<Text>();
         listText.text = "";
-        for (int i = 0; i < pla.Length; i++)
+        for (int i = 0; i < ps.Length; i++)
         {
-            Color c = pla[i].GetComponent<PlayerBehaviour>().GetClothColor();
-            string pn = pla[i].GetComponent<PlayerBehaviour>().GetName();
+            Color c = ps[i].GetComponent<PlayerBehaviour>().GetClothColor();
             string n = player[i].NickName; 
             listText.text += RGBConvertHex(c, n);
-            Debug.Log(n);
-            Debug.Log(pn);
         }
     }
 

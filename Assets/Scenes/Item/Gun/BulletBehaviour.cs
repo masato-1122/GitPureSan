@@ -31,12 +31,12 @@ public class BulletBehaviour : MonoBehaviour
         
         GameObject obj = col.gameObject;
 
-        /*
+        
         if( obj.tag == "Player")
         {
-            obj.GetComponent<PlayerBehaviour>().Damage(10);
+            obj.GetComponent<PlayerBehaviour>().Damaged(gameObject);
         }
-        */
+        
 
         ExecuteEvents.Execute<ItemReceiveMessage>(
                 target: col.gameObject,

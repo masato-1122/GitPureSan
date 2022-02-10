@@ -157,6 +157,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     public void SetOwner(PhotonView view)
     {
         GetComponent<PhotonView>().TransferOwnership(view.OwnerActorNr);
+        Debug.Log("譲渡しました。譲渡ID:"+ view.OwnerActorNr);
     }
 
     public Vector3 GetHeldAngle()

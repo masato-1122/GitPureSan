@@ -51769,8 +51769,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1512154355}
   - component: {fileID: 1512154357}
-  - component: {fileID: 1512154356}
   - component: {fileID: 1512154358}
+  - component: {fileID: 1512154356}
   m_Layer: 5
   m_Name: PlayerList
   m_TagString: List
@@ -51810,7 +51810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -51830,7 +51830,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: text
 --- !u!222 &1512154357
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51851,7 +51851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a1648cf58f46c4b95628950f819fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listText: {fileID: 1512154356}
+  listText: {fileID: 0}
 --- !u!1 &1513197996
 GameObject:
   m_ObjectHideFlags: 0
