@@ -89,7 +89,7 @@ public class HandBehaviour : MonoBehaviour, HandReceiveMessage
             slot[slotIndex] = targetObject;
             SetItemFromSlot();
             item.GetComponent<ItemBehaviour>().SetUsing();
-            item.GetComponent<PhotonView>().RequestOwnership();
+            //item.GetComponent<PhotonView>().RequestOwnership();
 
             item.transform.parent = gameObject.transform;
             targetObject = null;

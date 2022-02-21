@@ -25,6 +25,9 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     protected Vector3 heldAngle;
     protected Vector3 heldSize;
 
+    protected GameObject owner;
+    protected PhotonView playerPhoton;
+
     // Attributes
     protected Dictionary<string, string> attributes;
 
@@ -45,7 +48,6 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         {
             if (targeted)
             {
-                Debug.Log(GetComponent<PhotonView>().OwnerActorNr);
                 //GetComponent<Renderer>().material.color = Color.yellow;
             }
             else
@@ -122,6 +124,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         state = STATE_USING;
         gameObject.SetActive(true);
         gameObject.transform.localScale = heldSize;
+
     }
 
     // アイテムの機能を実行
@@ -154,6 +157,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         targeted = true;
     }
 
+    //Photonコンポーネントの主勇者譲渡関数
     public void SetOwner(PhotonView view)
     {
         GetComponent<PhotonView>().TransferOwnership(view.OwnerActorNr);
@@ -173,5 +177,11 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
             return true;
         }
         return false;
+    }
+
+    public void SetOwner(GameObject player)
+    {
+        owner = player;
+        playerPhoton = player.GetComponent<PhotonView>();
     }
 }

@@ -4,30 +4,25 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class TrashBoxBehaviour : MonoBehaviour
+public class TrashBehaviour : MonoBehaviour
 {
     private GameObject rightHand;
     private GameObject leftHand;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
         GameObject item = collision.gameObject;
-        if (item.CompareTag("OBJECT"))
-        {
-            item.GetComponent<ItemBehaviour>().SetAbandoned();
-            PhotonNetwork.Destroy(item);
-        }
         if (item.CompareTag("Player"))
         {
             rightHand = item.GetComponent<PlayerBehaviour>().GetRightHandItem();
@@ -46,8 +41,8 @@ public class TrashBoxBehaviour : MonoBehaviour
             dropItem1.transform.position = player.transform.position;
             dropItem1.transform.rotation = Quaternion.identity;
             dropItem1.GetComponent<ItemBehaviour>().SetAbandoned();
-            dropItem1.GetComponent<PhotonView>().RequestOwnership();
-            PhotonNetwork.Destroy(dropItem1);
+            //dropItem1.GetComponent<PhotonView>().RequestOwnership();
+            //PhotonNetwork.Destroy(dropItem1);
         }
 
         GameObject dropItem2 = rightHand.GetComponent<HandBehaviour>().DropItem();
@@ -57,8 +52,8 @@ public class TrashBoxBehaviour : MonoBehaviour
             dropItem2.transform.position = player.transform.position;
             dropItem2.transform.rotation = Quaternion.identity;
             dropItem2.GetComponent<ItemBehaviour>().SetAbandoned();
-            dropItem2.GetComponent<PhotonView>().RequestOwnership();
-            PhotonNetwork.Destroy(dropItem2);
+            //dropItem2.GetComponent<PhotonView>().RequestOwnership();
+            //PhotonNetwork.Destroy(dropItem2);
         }
 
         /*

@@ -56,13 +56,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
         clone.GetComponent<PlayerBehaviour>().SetColor(getClothColor());
-        
-
         clone.GetComponent<PhotonView>().RPC("UpdateMemberList", RpcTarget.AllBuffered);
-        /*
-        playerList.TagObject = clone;
-        Debug.Log(playerList.TagObject);
-        */
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
 

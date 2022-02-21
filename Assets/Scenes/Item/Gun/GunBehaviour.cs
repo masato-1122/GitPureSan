@@ -9,7 +9,7 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject muzzle = null;
     public GameObject bulletPrefab = null;
     public float initialVelocity = 50.0f;
-    private PhotonView photonView;
+    //private PhotonView photonView;
 
     private int launch;
     private int maxLaunch = 6;
@@ -21,17 +21,21 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     protected void Start()
     {
         base.Start();
+        /*
         photonView = this.GetComponent<PhotonView>();
         if (!photonView.IsMine)
         {
             return;
         }
+        */
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
         heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
         launch = maxLaunch;
         time = maxTimer;
+
+        //GameObject owner = transform.parent.parent.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -47,12 +51,25 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     {
         if (launch > 0 && time > maxTimer)
         {
-            //GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-            GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-            bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
+            playerPhoton.RPC("CreateBullet", RpcTarget.AllBuffered);
+            
+            
+            //CreateBullet();
             time = 0.0f;
             //launch--;
         }
+        else
+        {
+            return;
+        }
+    }
+
+    [PunRPC]
+    private void CreateBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+        //GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
     }
 
     public void addLaunch()

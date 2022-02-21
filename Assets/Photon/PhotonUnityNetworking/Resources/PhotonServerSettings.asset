@@ -36,16 +36,11 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
+  - DrawLottery
   - Fire
   - RespawnSpaceship
-  - setClothColor
-  - setName
-  - SetParent
-  - SetName
-  - ListUpdate
-  - OnPhotonInstantiate
   - UpdateMemberList
-  - UpdateList
+  - CreateBullet
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

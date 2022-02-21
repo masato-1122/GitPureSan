@@ -83,6 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
         pointTemp.z = 0f;
         clone.transform.position = pointTemp;
+        
     }
 
 
@@ -148,7 +149,8 @@ public class PlayerBehaviour : MonoBehaviour
                 if (target.CompareTag("OBJECT"))
                 {
                     target.GetComponent<ItemBehaviour>().Targeted();
-                    target.GetComponent<ItemBehaviour>().SetOwner(GetComponent<PhotonView>());
+                    //target.GetComponent<ItemBehaviour>().SetOwner(GetComponent<PhotonView>());
+                    target.GetComponent<ItemBehaviour>().SetOwner(gameObject);
                     uitext.text = String.Format(String.Format("{0}", target.name));
                 }
             }
@@ -257,8 +259,15 @@ public class PlayerBehaviour : MonoBehaviour
                 camera = mainCamera;
             }
         }
+        
+        //部屋の退出
+        if( Input.GetKeyUp(KeyCode.T))
+        {
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<PhotonManager>().OnLeftRoom();
+        }
     }
 
+    
     public void Damaged(GameObject attacker)
     {
         hp -= 5;
@@ -268,6 +277,7 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("体力が無くなりました");
         }
     }
+    
 
     private void stateOver()
     {
@@ -284,8 +294,7 @@ public class PlayerBehaviour : MonoBehaviour
         Text uitext = indicator.GetComponent<Text>();
         uitext.text = "";
     }
-
-        [PunRPC]
+       // [PunRPC]
     public void SetName(string n)
     {
         nameText.text = n;
@@ -306,14 +315,8 @@ public class PlayerBehaviour : MonoBehaviour
         GameObject list = GameObject.FindGameObjectWithTag("List");
         GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
         list.GetComponent<AllPlayerList>().UpdateList(pla);
-        
-        /*
-        GameObject list = GameObject.FindGameObjectWithTag("List");
-        list.GetComponent<AllPlayerList>().CreateList(PhotonNetwork.PlayerList.Length);
-        */
     }
     
-
     public void SetColor(Color c)
     {
         rightArm.GetComponent<Renderer>().material.color = c;

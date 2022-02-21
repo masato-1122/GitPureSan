@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1499307868680160345}
   - component: {fileID: 1946010319008109979}
   - component: {fileID: 4752185051547000971}
-  - component: {fileID: 5118232752708869412}
-  - component: {fileID: 8568579862902077074}
   - component: {fileID: -4052947862324894033}
+  - component: {fileID: -5769600416213792958}
+  - component: {fileID: -367900805718224514}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: OBJECT
@@ -117,7 +117,19 @@ MonoBehaviour:
   muzzle: {fileID: 5127569981288247918}
   initialVelocity: 25
   maxTimer: 1
---- !u!114 &5118232752708869412
+--- !u!114 &-4052947862324894033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4255242050659372108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e76cd8c4246dd489c41869e2aedba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5769600416213792958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,14 +145,13 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 1
+  OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8568579862902077074}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8568579862902077074
+--- !u!114 &-367900805718224514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,20 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
+  m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-4052947862324894033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255242050659372108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e76cd8c4246dd489c41869e2aedba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5127569981288247918
 GameObject:
   m_ObjectHideFlags: 0

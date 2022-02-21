@@ -9,10 +9,12 @@ public class BulletBehaviour : MonoBehaviour
 {
     private float timer;
     private GameObject targetObject = null;
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         timer = 0;
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -21,7 +23,8 @@ public class BulletBehaviour : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > 3.0)
         {
-            PhotonNetwork.Destroy(gameObject);
+            //PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -31,48 +34,24 @@ public class BulletBehaviour : MonoBehaviour
         
         GameObject obj = col.gameObject;
 
-        
         if( obj.tag == "Player")
         {
             obj.GetComponent<PlayerBehaviour>().Damaged(gameObject);
         }
         
-
         ExecuteEvents.Execute<ItemReceiveMessage>(
                 target: col.gameObject,
                 eventData: null,
                 functor: (receiver, eventData) => receiver.Damaged(gameObject)
                 );
-        /*
-        ExecuteEvents.Execute<PlayerBehaviour>(
-                target: targetObject,
-                eventData: null,
-                functor: (receiver, eventData) => receiver.Damage(10)
-                );
-        */
 
         
         if(obj.tag=="WALL")
         {
-            PhotonNetwork.Destroy(gameObject);
-            return;
-        }
-
-        /*
-        if(obj.tag=="ENEMY")
-        {
-            GameObject zombie = collisionInfo.gameObject;
-            ExecuteEvents.Execute<ReceiveMessage>(
-                target: zombie,
-                eventData: null,
-                functor: (receiver, eventData) => receiver.setDead());
-        }
-        if(obj.tag == "OBJECT")
-        {
+            //PhotonNetwork.Destroy(gameObject);
             Destroy(gameObject);
             return;
         }
-        */
     }
     
 }
