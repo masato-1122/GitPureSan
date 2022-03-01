@@ -34,8 +34,6 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
         heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
         launch = maxLaunch;
         time = maxTimer;
-
-        //GameObject owner = transform.parent.parent.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -46,17 +44,18 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     }
 
     //
-
+    [PunRPC]
     public void Action( GameObject targetPoint )
     {
         if (launch > 0 && time > maxTimer)
         {
-            playerPhoton.RPC("CreateBullet", RpcTarget.AllBuffered);
-            
-            
-            //CreateBullet();
-            time = 0.0f;
-            //launch--;
+            if (playerPhoton != null)
+            {
+                playerPhoton.RPC("CreateBullet", RpcTarget.AllBuffered);
+                //CreateBullet();
+                time = 0.0f;
+                //launch--;
+            }
         }
         else
         {
@@ -64,7 +63,6 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
         }
     }
 
-    [PunRPC]
     private void CreateBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;

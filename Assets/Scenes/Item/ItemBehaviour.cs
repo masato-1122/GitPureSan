@@ -26,7 +26,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     protected Vector3 heldSize;
 
     protected GameObject owner;
-    protected PhotonView playerPhoton;
+    public PhotonView playerPhoton;
 
     // Attributes
     protected Dictionary<string, string> attributes;

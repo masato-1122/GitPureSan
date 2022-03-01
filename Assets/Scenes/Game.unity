@@ -1838,7 +1838,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32778
+  m_Name: pb_Mesh31812
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2097,7 +2097,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33240
+  m_Name: pb_Mesh32468
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3636,6 +3636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e097035d2ae5a4dacb57c09a9a5ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
 --- !u!1 &242686719
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,8 +7892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d676fd7f511a441800e9b9eba8f687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHand: {fileID: 0}
-  leftHand: {fileID: 0}
 --- !u!65 &540126199
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9269,6 +9268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb866c144da05984ba4daa71742212a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 7152704175093739093, guid: 32dc22a519393ee439b8f352e0d6990d, type: 3}
 --- !u!65 &671384670
 BoxCollider:
@@ -12986,6 +12986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb866c144da05984ba4daa71742212a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 5699118075382778081, guid: 155423cb778500b4c9c3a731d71ac8bf, type: 3}
 --- !u!65 &1085234089
 BoxCollider:
@@ -33279,6 +33280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb866c144da05984ba4daa71742212a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 1772727528709995981, guid: 3cae064c376e02d4d890371e92fe188b, type: 3}
 --- !u!65 &1224108273
 BoxCollider:
@@ -34853,8 +34855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d676fd7f511a441800e9b9eba8f687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHand: {fileID: 0}
-  leftHand: {fileID: 0}
 --- !u!65 &1330432419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52444,7 +52444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1529156199
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52534,6 +52534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb866c144da05984ba4daa71742212a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 4255242050659372108, guid: 4bb590e56d6cb2e4a8233532f6a334dc, type: 3}
 --- !u!1 &1530336119
 GameObject:
@@ -52607,9 +52608,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Move:WASD Look:MOUSE Jump:SPACE
 
-    LeftHand:Q RightHand:E
-
-    Exit:T'
+    ItemChange:Q E           ItemRelease:Z
+    C'
 --- !u!222 &1530336122
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54499,6 +54499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb866c144da05984ba4daa71742212a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 7141832762497607106, guid: 99e8b1af824dc6b45811aa708f248e8d, type: 3}
 --- !u!65 &1657253937
 BoxCollider:
@@ -59912,6 +59913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f5b984d2981b145a9661d60c73743d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPhoton: {fileID: 0}
   spawn: {fileID: 1841208290470349458, guid: f47f178f7c1f5914da04414123ff3436, type: 3}
 --- !u!65 &2022463816
 BoxCollider:

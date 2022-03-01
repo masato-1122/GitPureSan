@@ -33,7 +33,7 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
-  - ClickRpc
+  - 
   - DestroyRpc
   - DestroySpaceship
   - DrawLottery
@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - UpdateMemberList
   - CreateBullet
+  - ClickRpc
+  - Action
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
