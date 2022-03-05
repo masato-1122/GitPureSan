@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3346239244333004064}
   - component: {fileID: 1586815517553321635}
   - component: {fileID: -6340302247937071823}
+  - component: {fileID: -6220614623765705190}
   m_Layer: 0
   m_Name: Gun
   m_TagString: OBJECT
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14eb15fa7b1c25845ad21af46a5115eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
   muzzle: {fileID: 8972507708346596054}
   bulletPrefab: {fileID: 4201681556816118858, guid: b27c9c768719a1946bcbebe316262504,
     type: 3}
@@ -170,6 +172,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e76cd8c4246dd489c41869e2aedba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6220614623765705190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772727528709995981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &2371432317932506302
 GameObject:
   m_ObjectHideFlags: 0

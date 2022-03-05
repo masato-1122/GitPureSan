@@ -9,7 +9,6 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject muzzle = null;
     public GameObject bulletPrefab = null;
     public float initialVelocity = 50.0f;
-    //private PhotonView photonView;
 
     private int launch;
     private int maxLaunch = 6;
@@ -21,13 +20,11 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     protected void Start()
     {
         base.Start();
-        /*
-        photonView = this.GetComponent<PhotonView>();
+        photonView = gameObject.GetComponent<PhotonView>();
         if (!photonView.IsMine)
         {
             return;
         }
-        */
         SetAttribute(ATTRIB_OWNABLE);
         SetAttribute(ATTRIB_ABANDONABLE);
         SetAbandoned();
@@ -44,18 +41,15 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     }
 
     //
-    [PunRPC]
     public void Action( GameObject targetPoint )
     {
         if (launch > 0 && time > maxTimer)
         {
-            if (playerPhoton != null)
-            {
-                playerPhoton.RPC("CreateBullet", RpcTarget.AllBuffered);
-                //CreateBullet();
-                time = 0.0f;
-                //launch--;
-            }
+           //owner.GetComponent<PhotonView>().RPC(nameof(CreateBullet), RpcTarget.AllBuffered);
+            //this.photonView.RPC(nameof(CreateBullet), RpcTarget.AllBuffered);
+            CreateBullet();
+            time = 0.0f;
+            //launch--;
         }
         else
         {
@@ -63,10 +57,11 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
         }
     }
 
+    [PunRPC]
     private void CreateBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
-        //GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+        //GameObject bullet = Instantiate(bulletPrefab, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
+        GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, muzzle.transform.position, muzzle.transform.rotation) as GameObject;
         bullet.GetComponent<Rigidbody>().velocity = transform.forward * initialVelocity;
     }
 

@@ -26,7 +26,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     protected Vector3 heldSize;
 
     protected GameObject owner;
-    public PhotonView playerPhoton;
+    protected PhotonView photonView;
 
     // Attributes
     protected Dictionary<string, string> attributes;
@@ -157,7 +157,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
         targeted = true;
     }
 
-    //Photonコンポーネントの主勇者譲渡関数
+    //Photonコンポーネントの所有者譲渡
     public void SetOwner(PhotonView view)
     {
         GetComponent<PhotonView>().TransferOwnership(view.OwnerActorNr);
@@ -181,7 +181,10 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
 
     public void SetOwner(GameObject player)
     {
+
         owner = player;
-        playerPhoton = player.GetComponent<PhotonView>();
+        gameObject.GetComponent<PhotonView>().TransferOwnership(player.GetComponent<PhotonView>().OwnerActorNr);
+        this.photonView.ViewID = player.GetComponent<PhotonView>().ViewID;
+        photonView = player.GetComponent<PhotonView>();
     }
 }

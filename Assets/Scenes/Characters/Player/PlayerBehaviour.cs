@@ -16,6 +16,9 @@ public class PlayerBehaviour : MonoBehaviour
     public Camera camera;
     public GameObject dbboard = null;  // デバッグ表示
 
+    public GameObject aliveBody;
+    public GameObject ghostBody;
+
     //現体力、最大体力
     public static int hp;
     public static int maxHp = 50;
@@ -83,7 +86,9 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
         pointTemp.z = 0f;
         clone.transform.position = pointTemp;
-        
+
+        aliveBody.SetActive(true);
+        ghostBody.SetActive(false);
     }
 
 
