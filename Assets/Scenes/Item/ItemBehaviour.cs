@@ -34,7 +34,7 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     protected void Start()
     {
-        state = STATE_NORMAL;
+       // state = STATE_NORMAL;
         attributes = new Dictionary<string, string>();
         targeted = false;
         heldAngle = Vector3.zero;
@@ -181,10 +181,12 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
 
     public void SetOwner(GameObject player)
     {
-
         owner = player;
-        gameObject.GetComponent<PhotonView>().TransferOwnership(player.GetComponent<PhotonView>().OwnerActorNr);
-        this.photonView.ViewID = player.GetComponent<PhotonView>().ViewID;
         photonView = player.GetComponent<PhotonView>();
+    }
+
+    public void ItemDelete()
+    {
+        PhotonNetwork.Destroy(gameObject);
     }
 }

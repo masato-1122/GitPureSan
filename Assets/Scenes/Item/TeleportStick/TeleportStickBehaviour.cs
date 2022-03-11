@@ -10,7 +10,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     public GameObject teleportEffect = null;    // エフェクト
     public float effectLifeTime = 2;            // エフェクトの持続時間
     protected float now;
-    private PhotonView photon = null;
+    private PhotonView photonView = null;
     protected int hp = 5;
 
     [SerializeField]private string objName;
@@ -21,7 +21,7 @@ public class TeleportStickBehaviour : ItemBehaviour, ItemReceiveMessage
     {
         base.Start();
 
-        photon = this.GetComponent<PhotonView>();
+        photonView = this.GetComponent<PhotonView>();
         if (!photonView.IsMine)
         {
             return;

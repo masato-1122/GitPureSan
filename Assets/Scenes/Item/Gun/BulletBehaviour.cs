@@ -10,7 +10,6 @@ public class BulletBehaviour : MonoBehaviour
     private float timer;
     private GameObject targetObject = null;
     private Rigidbody rb;
-    // Start is called before the first frame update
     void Start()
     {
         timer = 0;

@@ -42,7 +42,7 @@ public class TrashBehaviour : MonoBehaviour
             dropItem1.transform.rotation = Quaternion.identity;
             dropItem1.GetComponent<ItemBehaviour>().SetAbandoned();
             //dropItem1.GetComponent<PhotonView>().RequestOwnership();
-            //PhotonNetwork.Destroy(dropItem1);
+            dropItem1.GetComponent<ItemBehaviour>().ItemDelete();
         }
 
         GameObject dropItem2 = rightHand.GetComponent<HandBehaviour>().DropItem();
@@ -53,7 +53,7 @@ public class TrashBehaviour : MonoBehaviour
             dropItem2.transform.rotation = Quaternion.identity;
             dropItem2.GetComponent<ItemBehaviour>().SetAbandoned();
             //dropItem2.GetComponent<PhotonView>().RequestOwnership();
-            //PhotonNetwork.Destroy(dropItem2);
+            dropItem2.GetComponent<ItemBehaviour>().ItemDelete();
         }
 
         /*

@@ -175,7 +175,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7152704175093739093}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.16104585, y: 1.2886132, z: 0.7373231}
@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6549cfc7fb5af449bb6866a213db224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPhoton: {fileID: 0}
   particle: {fileID: 2717430878046281174, guid: af4fa6510983a4548881e38614f91cd6,
     type: 3}
 --- !u!135 &2463060848566343685

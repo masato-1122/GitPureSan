@@ -18,8 +18,6 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
 
     private PhotonView photonView;
     private Rigidbody rigidbody;
-    private Vector3 networkPosition;
-    private Quaternion networkRotation;
 
     // Start is called before the first frame update
     protected void Start()
@@ -123,7 +121,12 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
 
     public void ActionForTargetedObject( GameObject target )
     {
-        Action(target);
+        targetObject = target;
+        if (state == STATE_NORMAL)
+        {
+            state = STATE_BREAK;
+            transform.Rotate(new Vector3(90.0f, 0.0f, 0.0f));
+        }
     }
 
     //
@@ -136,3 +139,4 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         }
     }
 }
+

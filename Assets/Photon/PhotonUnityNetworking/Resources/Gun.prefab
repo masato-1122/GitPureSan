@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14eb15fa7b1c25845ad21af46a5115eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 0}
   muzzle: {fileID: 8972507708346596054}
   bulletPrefab: {fileID: 4201681556816118858, guid: b27c9c768719a1946bcbebe316262504,
     type: 3}

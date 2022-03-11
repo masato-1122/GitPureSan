@@ -86,9 +86,10 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
         pointTemp.z = 0f;
         clone.transform.position = pointTemp;
-
+        /*
         aliveBody.SetActive(true);
         ghostBody.SetActive(false);
+        */
     }
 
 
@@ -154,7 +155,6 @@ public class PlayerBehaviour : MonoBehaviour
                 if (target.CompareTag("OBJECT"))
                 {
                     target.GetComponent<ItemBehaviour>().Targeted();
-                    //target.GetComponent<ItemBehaviour>().SetOwner(GetComponent<PhotonView>());
                     target.GetComponent<ItemBehaviour>().SetOwner(gameObject);
                     uitext.text = String.Format(String.Format("{0}", target.name));
                 }
