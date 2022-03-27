@@ -26,7 +26,6 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
     protected Vector3 heldSize;
 
     protected GameObject owner;
-    protected PhotonView photonView;
 
     // Attributes
     protected Dictionary<string, string> attributes;
@@ -177,12 +176,6 @@ public class ItemBehaviour : MonoBehaviourPunCallbacks
             return true;
         }
         return false;
-    }
-
-    public void SetOwner(GameObject player)
-    {
-        owner = player;
-        photonView = player.GetComponent<PhotonView>();
     }
 
     public void ItemDelete()

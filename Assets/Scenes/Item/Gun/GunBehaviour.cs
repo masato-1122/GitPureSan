@@ -16,6 +16,8 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     public float maxTimer = 0.5f;
     private float time;
 
+    private PhotonView photonView;
+
     // Start is called before the first frame update
     protected void Start()
     {
