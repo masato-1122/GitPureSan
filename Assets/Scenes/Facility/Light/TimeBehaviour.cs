@@ -22,6 +22,6 @@ public class TimeBehaviour : MonoBehaviour
         today = DateTime.Now;
         Debug.Log(today.Hour.ToString());
         */
-        transform.Rotate(new Vector3(0.05f, 0, 0));
+        transform.Rotate(new Vector3(0.08f, 0, 0));
     }
 }
