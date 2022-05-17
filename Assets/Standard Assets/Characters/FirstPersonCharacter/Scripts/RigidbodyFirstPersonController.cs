@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using Photon.Pun;
+using Photon.Realtime;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {

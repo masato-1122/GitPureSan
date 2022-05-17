@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -54,6 +55,8 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject body;
 
     private Color clothColor;
+
+    private bool cursor = true;
 
     // Start is called before the first frame update
     void Start()
@@ -264,11 +267,23 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
         
-        //部屋の退出
-        if( Input.GetKeyUp(KeyCode.T))
+        //マウスの表示・非表示
+        if (Input.GetKeyUp(KeyCode.T))
         {
-            GameObject.FindGameObjectWithTag("Manager").GetComponent<PhotonManager>().OnLeftRoom();
+            if( cursor)
+            {
+                Cursor.visible = false;
+                cursor = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                Cursor.visible = true;
+                cursor = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
+        
     }
 
     
@@ -318,7 +333,7 @@ public class PlayerBehaviour : MonoBehaviour
         
         GameObject list = GameObject.FindGameObjectWithTag("List");
         GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
-        list.GetComponent<AllPlayerList>().UpdateList(pla);
+        //list.GetComponent<AllPlayerList>().UpdateList(pla);
     }
     
     public void SetColor(Color c)

@@ -27,10 +27,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private GameObject namePanel;
     public GameObject namePrefab;
 
+    void Awake()
+    {
+        GameObject instance = GameObject.Find(this.gameObject.name);
+        if (instance.gameObject != this.gameObject)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if( GameObject.Find("PhotonManager") != null)
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -50,8 +61,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
         PhotonNetwork.IsMessageQueueRunning = true;
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
-        
-        //プレイヤー操作スクリプト、
+
+        //プレイヤー操作スクリプトの準備
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
@@ -79,6 +90,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void LogoutRoom()
     {
         PhotonNetwork.LeaveRoom();
+
     }
 
     public override void OnConnectedToMaster()
@@ -106,6 +118,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         this.logMessage += "ルームから退出しました。\n";
         SceneManager.sceneLoaded += this.LeaveRoomLoaded;
         SceneManager.LoadScene("Login");
+        
     }
 
     public void SetColor(Color c)
