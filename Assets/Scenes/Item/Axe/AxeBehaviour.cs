@@ -40,6 +40,7 @@ public class AxeBehaviour : ItemBehaviour, ItemReceiveMessage
         SetAbandoned();
 
         heldAngle = new Vector3(90.0f, 0.0f, 0.0f);
+
     }
 
     // Update is called once per frame
