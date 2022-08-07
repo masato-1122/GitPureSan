@@ -94,11 +94,13 @@ public class MakeMaze : MonoBehaviour
                 floorObj.transform.parent = transform;
             }
         }
-        
+        start.transform.position = new Vector3(1, 1, 1);
+        goal.transform.position = new Vector3(max-2, 1, max-2);
+        /*
         GameObject startObj = Instantiate(start, new Vector3(1, 1, 1), Quaternion.identity) as GameObject;
         startObj.transform.parent = transform;
         GameObject goalObj = Instantiate(goal, new Vector3(max-2, 1, max-2), Quaternion.identity) as GameObject;
         goalObj.transform.parent = transform;
-        
+        */
     }
 }

@@ -11,6 +11,8 @@ public class ColorChange : MonoBehaviour
     private Color objColor;
     private PhotonManager photonManager;
 
+    public GameObject demoPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class ColorChange : MonoBehaviour
         float blue = this.blueslider.GetComponent<Slider>().value;
         this.colPanel.GetComponent<Image>().color = new Color(red, green, blue, 1);
         objColor = new Color(red, green, blue, 1);
+        demoPlayer.GetComponent<FlyingDemo>().setColor(objColor);
     }
 
     public void enterColor()
