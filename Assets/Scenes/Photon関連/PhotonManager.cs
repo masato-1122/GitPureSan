@@ -38,7 +38,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if( GameObject.Find("PhotonManager") != null)
+        if (GameObject.Find("PhotonManager") != null)
         {
             DontDestroyOnLoad(this.gameObject);
         }
@@ -118,7 +118,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         this.logMessage += "ÉãÅ[ÉÄÇ©ÇÁëﬁèoÇµÇ‹ÇµÇΩÅB\n";
         SceneManager.sceneLoaded += this.LeaveRoomLoaded;
         SceneManager.LoadScene("Login");
-        
+
     }
 
     public void SetColor(Color c)

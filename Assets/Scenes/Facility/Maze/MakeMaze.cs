@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class MakeMaze : MonoBehaviour
 {
@@ -18,6 +20,12 @@ public class MakeMaze : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        //Build();
+    }
+
+    [PunRPC]
+    void Build()
     {
         int[,] field = new int[max, max];
         for (int i = 0; i < max; i++)
@@ -87,15 +95,15 @@ public class MakeMaze : MonoBehaviour
             {
                 if (field[i, j] == WALL)
                 {
-                    GameObject wallobj = Instantiate(wall, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
+                    GameObject wallobj = Instantiate(wall, new Vector3(i*3+40, 0, j*3+400), Quaternion.identity) as GameObject;
                     wallobj.transform.parent = transform;
                 }
-                GameObject floorObj = Instantiate(floor, new Vector3(i, -1, j), Quaternion.identity) as GameObject;
+                GameObject floorObj = Instantiate(floor, new Vector3(i*3+40, -1, j*3+400), Quaternion.identity) as GameObject;
                 floorObj.transform.parent = transform;
             }
         }
-        start.transform.position = new Vector3(1, 1, 1);
-        goal.transform.position = new Vector3(max-2, 1, max-2);
+        start.transform.position = new Vector3(1*3+40, 0, 1*3+400);
+        goal.transform.position = new Vector3((max-2)*3+40, 1, (max-2)*3+400);
         /*
         GameObject startObj = Instantiate(start, new Vector3(1, 1, 1), Quaternion.identity) as GameObject;
         startObj.transform.parent = transform;
