@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 using Photon.Pun;
 using Photon.Realtime;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -58,6 +58,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private bool cursor = true;
 
+    // ネットワーク管理用
+    public Player Player;
+    public string UserName;
+    public string UserID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +79,9 @@ public class PlayerBehaviour : MonoBehaviour
         leftHand = GameObject.Find("LeftHand");
 
         camera = mainCamera;
+        mainCamera.enabled = true;
+        tpCamera.enabled = false;
+
         dbboard = GameObject.FindWithTag("DDBoard");
         indicator = GameObject.FindWithTag("indicator");
 
@@ -84,11 +92,13 @@ public class PlayerBehaviour : MonoBehaviour
         canvas.GetComponent<Canvas>().worldCamera = this.camera;
 
         //名前テキストの生成と表示
-        GameObject clone = PhotonNetwork.Instantiate(nameText.name, gameObject.transform.position, Quaternion.identity);
-        clone.transform.parent = canvas.transform;
+        //GameObject clone = Instantiate(Resources.Load<GameObject>("NameText"), gameObject.transform.position, Quaternion.identity);
+        //clone.transform.SetParent(canvas.transform);
+
         Vector3 pointTemp = camera.WorldToScreenPoint(Vector3.zero);
         pointTemp.z = 0f;
-        clone.transform.position = pointTemp;
+        //clone.transform.position = pointTemp;
+        
         /*
         aliveBody.SetActive(true);
         ghostBody.SetActive(false);
@@ -145,7 +155,7 @@ public class PlayerBehaviour : MonoBehaviour
         Text uitext = indicator.GetComponent<Text>();
         uitext.text = "";
         target = null;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2 , Screen.height/2, 0));
         RaycastHit hit;
         if(Physics.Raycast(ray,out hit, 10.0f))
         {
@@ -324,17 +334,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         return name;
     }
+    
 
     
-    //Managerクラスでプレイヤーの入室時にプレイヤー一覧更新
-    [PunRPC]
-    private void UpdateMemberList()
-    {
-        
-        GameObject list = GameObject.FindGameObjectWithTag("List");
-        GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
-        //list.GetComponent<AllPlayerList>().UpdateList(pla);
-    }
     
     public void SetColor(Color c)
     {
@@ -357,5 +359,49 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject GetLeftHandItem()
     {
         return this.leftHand;
+    }
+
+
+    //Managerクラスでプレイヤーの入室時にプレイヤー一覧更新
+    [PunRPC]
+    private void UpdateMemberList()
+    {
+
+        //GameObject list = GameObject.FindGameObjectWithTag("List");
+        GameObject[] pla = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("Login > [ " + pla[pla.Length - 1] + " ]");
+        //list.GetComponent<AllPlayerList>().UpdateList(pla);
+
+        GameObject nameTag = Instantiate(Resources.Load<GameObject>("NameText"), GameObject.Find("Canvas").transform);
+        
+        //nameTag.GetComponent<NameTag>().TargetPlayer = loginPlayers[loginPlayers.Length - 1];
+
+        //PlayerList.StatusLog(MyNetworkStatus);
+    }
+
+
+    public void Initialize()
+    {
+        this.UserName = PhotonNetwork.LocalPlayer.NickName;
+
+        // マウスカーソルを固定
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // 自身のネームタグの作成
+        GameObject nameTag = Instantiate(Resources.Load<GameObject>("NameText"), GameObject.Find("Canvas").transform);
+        nameTag.GetComponent<NameTag>().Initialize(this);
+    }
+
+    [PunRPC]
+    public void OnJoinedRoomUser()
+    {
+        GameObject[] users = GameObject.FindGameObjectsWithTag("Player");
+
+        if (photonView.IsMine) return;
+
+        // ネームタグの作成
+        GameObject nameTag = Instantiate(Resources.Load<GameObject>("NameText"), GameObject.Find("Canvas").transform);
+        nameTag.GetComponent<NameTag>().Initialize(users[users.Length - 1].GetComponent<PlayerBehaviour>());
     }
 }

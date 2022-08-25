@@ -21,7 +21,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     //プレイヤーの服の色、体の色
     private Color clothColor;
     private Color bodyColor;
-    private PhotonView photonView;
 
     //名前表示オブジェクト
     private GameObject namePanel;
@@ -38,10 +37,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (GameObject.Find("PhotonManager") != null)
+        if( GameObject.Find("PhotonManager") != null)
         {
             DontDestroyOnLoad(this.gameObject);
         }
+
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -59,15 +59,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     void JoinRoomLoaded(Scene scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         logMessage += PhotonNetwork.NickName + "を生成します。\n";
+        
         PhotonNetwork.IsMessageQueueRunning = true;
+
         clone = PhotonNetwork.Instantiate("Player", new Vector3(50f, 5f, -90f), Quaternion.identity);
 
         //プレイヤー操作スクリプトの準備
         clone.GetComponent<RigidbodyFirstPersonController>().enabled = true;
+
         clone.GetComponent<PlayerBehaviour>().enabled = true;
         clone.GetComponent<PlayerBehaviour>().SetName(PhotonNetwork.NickName);
         clone.GetComponent<PlayerBehaviour>().SetColor(getClothColor());
-        clone.GetComponent<PhotonView>().RPC("UpdateMemberList", RpcTarget.AllBuffered);
+        clone.GetComponent<PlayerBehaviour>().Initialize();
+        clone.GetComponent<PhotonView>().RPC("OnJoinedRoomUser", RpcTarget.AllBuffered);
+
         SceneManager.sceneLoaded -= this.JoinRoomLoaded;
     }
 
@@ -84,7 +89,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom(string roomName)
     {
-        PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions(), TypedLobby.Default);
+        // ルーム設定
+        RoomOptions op = new RoomOptions();
+        op.PublishUserId = true;
+        op.MaxPlayers = 20;
+
+        PhotonNetwork.JoinOrCreateRoom(roomName, op, TypedLobby.Default);
     }
 
     public void LogoutRoom()
@@ -118,8 +128,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         this.logMessage += "ルームから退出しました。\n";
         SceneManager.sceneLoaded += this.LeaveRoomLoaded;
         SceneManager.LoadScene("Login");
-
+        
     }
+
+
+    public void NameTagUpdate()
+    {
+        Player[] loginPlayers = PhotonNetwork.PlayerList;
+
+        GameObject nameTag = Instantiate(Resources.Load<GameObject>("NameText"), GameObject.Find("Canvas").transform);
+        nameTag.GetComponent<NameTag>().TargetPlayer = loginPlayers[loginPlayers.Length - 1];
+    }
+
 
     public void SetColor(Color c)
     {
