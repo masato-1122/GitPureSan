@@ -49,6 +49,8 @@ public class BulletBehaviour : MonoBehaviour
         {
             //PhotonNetwork.Destroy(gameObject);
             Destroy(gameObject);
+
+            Debug.Log("Bullet Destroy");
             return;
         }
     }

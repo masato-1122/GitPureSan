@@ -45,6 +45,8 @@ public class GunBehaviour : ItemBehaviour, ItemReceiveMessage
     //
     public void Action( GameObject targetPoint )
     {
+        Debug.Log("launch[" + launch + "] > 0");
+
         if (launch > 0 && time > maxTimer)
         {
            //owner.GetComponent<PhotonView>().RPC(nameof(CreateBullet), RpcTarget.AllBuffered);

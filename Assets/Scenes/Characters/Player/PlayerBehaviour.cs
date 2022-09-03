@@ -198,6 +198,7 @@ public class PlayerBehaviour : MonoBehaviour
                 // ターゲティングされている
                 //
                 leftHand.GetComponent<HandBehaviour>().ActionForTargetedObject(target);
+                Debug.Log("Targeted Action > " + target.name);
             }
             else
             {
