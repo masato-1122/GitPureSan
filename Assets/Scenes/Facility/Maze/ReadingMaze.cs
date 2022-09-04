@@ -26,11 +26,17 @@ public class ReadingMaze : MonoBehaviour
     private int[,] field;
     private string[] textData;
 
+    private string mazeData1 = "SaveData1";
+    private string mazeData2 = "SaveData2";
+    private string mazeData3 = "SaveData3";
+    private string saveData;
+
     //
     // Start is called before the first frame update
     void Start()
     {
-        csvFile = Resources.Load("SaveData1") as TextAsset;
+        saveData = mazeData1;
+        csvFile = Resources.Load(saveData) as TextAsset;
         StringReader reader = new StringReader(csvFile.text);
         while (reader.Peek() != -1) // reader.Peaek‚ª-1‚É‚È‚é‚Ü‚Å
         {
