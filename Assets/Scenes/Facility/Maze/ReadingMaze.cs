@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text;
+using Photon.Realtime;
 
 public class ReadingMaze : MonoBehaviour
 {
@@ -35,7 +36,23 @@ public class ReadingMaze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        saveData = mazeData1;
+        //ŠÔ‘Ñ‚É‚æ‚Á‚Ä¶¬‚·‚é–À˜H‚ğ•ÏX
+        int hour = System.DateTime.Now.Hour;
+
+        switch(hour % 3)
+        {
+            case 0:
+                saveData = mazeData1;
+                break;
+            case 1:
+                saveData = mazeData2;
+                break;
+            case 2:
+                saveData = mazeData3;
+                break;
+        }
+
+        
         csvFile = Resources.Load(saveData) as TextAsset;
         StringReader reader = new StringReader(csvFile.text);
         while (reader.Peek() != -1) // reader.Peaek‚ª-1‚É‚È‚é‚Ü‚Å
