@@ -32,7 +32,18 @@ MonoBehaviour:
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList: []
+  RpcList:
+  - Build
+  - ClickRpc
+  - CreateBullet
+  - DestroyRpc
+  - DestroySpaceship
+  - DrawLottery
+  - Fire
+  - OnJoinedRoomUser
+  - RespawnSpaceship
+  - SetWeather
+  - UpdateMemberList
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
